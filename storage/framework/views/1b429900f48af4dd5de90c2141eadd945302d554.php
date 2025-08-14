@@ -1,9 +1,6 @@
-{{-- resources/views/user/result.blade.php --}}
-@extends('layouts.front')
+<?php $__env->startSection('title', __('messages.student_result')); ?>
 
-@section('title', __('messages.student_result'))
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="result-container">
     <!-- Student Info Card -->
     <div class="student-info-card">
@@ -13,21 +10,23 @@
             </div>
         </div>
         <div class="student-details">
-            <h2 class="student-name">{{ $user->name }}</h2>
+            <h2 class="student-name"><?php echo e($user->name); ?></h2>
             <div class="student-meta">
                 <span class="meta-item">
                     <span class="meta-icon">📱</span>
-                    {{ $user->phone }}
+                    <?php echo e($user->phone); ?>
+
                 </span>
                 <span class="meta-item">
                     <span class="meta-icon">🏫</span>
-                    {{ $user->school_name }}
+                    <?php echo e($user->school_name); ?>
+
                 </span>
             </div>
         </div>
         <div class="completion-badge">
             <div class="badge-icon">✅</div>
-            <span class="badge-text">{{ __('messages.completed') }}</span>
+            <span class="badge-text"><?php echo e(__('messages.completed')); ?></span>
         </div>
     </div>
 
@@ -36,50 +35,50 @@
         <div class="progress-bar">
             <div class="progress-step completed">
                 <div class="step-number">1</div>
-                <span class="step-label">{{ __('messages.student_info') }}</span>
+                <span class="step-label"><?php echo e(__('messages.student_info')); ?></span>
             </div>
             <div class="progress-line completed"></div>
             <div class="progress-step completed">
                 <div class="step-number">2</div>
-                <span class="step-label">{{ __('messages.grades') }}</span>
+                <span class="step-label"><?php echo e(__('messages.grades')); ?></span>
             </div>
             <div class="progress-line completed"></div>
             <div class="progress-step completed active">
                 <div class="step-number">3</div>
-                <span class="step-label">{{ __('messages.results') }}</span>
+                <span class="step-label"><?php echo e(__('messages.results')); ?></span>
             </div>
         </div>
     </div>
 
     <!-- Results Header -->
     <div class="result-header">
-        <img src="{{ asset('assets_front/images/logo.jpeg') }}" alt="{{ __('messages.logo') }}" class="logo2">
+        <img src="<?php echo e(asset('assets_front/images/logo.jpeg')); ?>" alt="<?php echo e(__('messages.logo')); ?>" class="logo2">
 
-        <h1 class="result-title">{{ __('messages.congratulations') }}!</h1>
-        <p class="result-subtitle">{{ __('messages.results_calculated_successfully') }}</p>
+        <h1 class="result-title"><?php echo e(__('messages.congratulations')); ?>!</h1>
+        <p class="result-subtitle"><?php echo e(__('messages.results_calculated_successfully')); ?></p>
     </div>
 
     <!-- Grades Summary -->
     <div class="grades-summary">
-        <h2 class="section-title">{{ __('messages.grades_summary') }}</h2>
+        <h2 class="section-title"><?php echo e(__('messages.grades_summary')); ?></h2>
         <div class="grades-grid">
             <div class="grade-card arabic">
                 <div class="grade-header">
                     <div class="grade-icon">📚</div>
                     <div class="grade-info">
-                        <h3 class="grade-subject">{{ __('messages.arabic_language') }}</h3>
-                        <span class="grade-weight">{{ __('messages.weight_10') }}</span>
+                        <h3 class="grade-subject"><?php echo e(__('messages.arabic_language')); ?></h3>
+                        <span class="grade-weight"><?php echo e(__('messages.weight_10')); ?></span>
                     </div>
                 </div>
                 <div class="grade-display">
-                    <span class="grade-value">{{ $user->arabic_grade }}</span>
+                    <span class="grade-value"><?php echo e($user->arabic_grade); ?></span>
                     <span class="grade-total">/100</span>
                 </div>
                 <div class="grade-percentage">
                     <div class="percentage-bar">
-                        <div class="percentage-fill" style="width: {{ $user->arabic_grade }}%"></div>
+                        <div class="percentage-fill" style="width: <?php echo e($user->arabic_grade); ?>%"></div>
                     </div>
-                    <span class="percentage-text">{{ $user->arabic_grade }}%</span>
+                    <span class="percentage-text"><?php echo e($user->arabic_grade); ?>%</span>
                 </div>
             </div>
 
@@ -87,19 +86,19 @@
                 <div class="grade-header">
                     <div class="grade-icon">🇬🇧</div>
                     <div class="grade-info">
-                        <h3 class="grade-subject">{{ __('messages.english_language') }}</h3>
-                        <span class="grade-weight">{{ __('messages.weight_10') }}</span>
+                        <h3 class="grade-subject"><?php echo e(__('messages.english_language')); ?></h3>
+                        <span class="grade-weight"><?php echo e(__('messages.weight_10')); ?></span>
                     </div>
                 </div>
                 <div class="grade-display">
-                    <span class="grade-value">{{ $user->english_grade }}</span>
+                    <span class="grade-value"><?php echo e($user->english_grade); ?></span>
                     <span class="grade-total">/100</span>
                 </div>
                 <div class="grade-percentage">
                     <div class="percentage-bar">
-                        <div class="percentage-fill" style="width: {{ $user->english_grade }}%"></div>
+                        <div class="percentage-fill" style="width: <?php echo e($user->english_grade); ?>%"></div>
                     </div>
-                    <span class="percentage-text">{{ $user->english_grade }}%</span>
+                    <span class="percentage-text"><?php echo e($user->english_grade); ?>%</span>
                 </div>
             </div>
 
@@ -107,19 +106,19 @@
                 <div class="grade-header">
                     <div class="grade-icon">🏛️</div>
                     <div class="grade-info">
-                        <h3 class="grade-subject">{{ __('messages.jordan_history') }}</h3>
-                        <span class="grade-weight">{{ __('messages.weight_10') }}</span>
+                        <h3 class="grade-subject"><?php echo e(__('messages.jordan_history')); ?></h3>
+                        <span class="grade-weight"><?php echo e(__('messages.weight_10')); ?></span>
                     </div>
                 </div>
                 <div class="grade-display">
-                    <span class="grade-value">{{ $user->jordan_history_grade }}</span>
+                    <span class="grade-value"><?php echo e($user->jordan_history_grade); ?></span>
                     <span class="grade-total">/40</span>
                 </div>
                 <div class="grade-percentage">
                     <div class="percentage-bar">
-                        <div class="percentage-fill" style="width: {{ ($user->jordan_history_grade / 40) * 100 }}%"></div>
+                        <div class="percentage-fill" style="width: <?php echo e(($user->jordan_history_grade / 40) * 100); ?>%"></div>
                     </div>
-                    <span class="percentage-text">{{ round(($user->jordan_history_grade / 40) * 100, 1) }}%</span>
+                    <span class="percentage-text"><?php echo e(round(($user->jordan_history_grade / 40) * 100, 1)); ?>%</span>
                 </div>
             </div>
 
@@ -127,19 +126,19 @@
                 <div class="grade-header">
                     <div class="grade-icon">☪️</div>
                     <div class="grade-info">
-                        <h3 class="grade-subject">{{ __('messages.islamic_education') }}</h3>
-                        <span class="grade-weight">{{ __('messages.weight_10') }}</span>
+                        <h3 class="grade-subject"><?php echo e(__('messages.islamic_education')); ?></h3>
+                        <span class="grade-weight"><?php echo e(__('messages.weight_10')); ?></span>
                     </div>
                 </div>
                 <div class="grade-display">
-                    <span class="grade-value">{{ $user->islamic_education_grade }}</span>
+                    <span class="grade-value"><?php echo e($user->islamic_education_grade); ?></span>
                     <span class="grade-total">/60</span>
                 </div>
                 <div class="grade-percentage">
                     <div class="percentage-bar">
-                        <div class="percentage-fill" style="width: {{ ($user->islamic_education_grade / 60) * 100 }}%"></div>
+                        <div class="percentage-fill" style="width: <?php echo e(($user->islamic_education_grade / 60) * 100); ?>%"></div>
                     </div>
-                    <span class="percentage-text">{{ round(($user->islamic_education_grade / 60) * 100, 1) }}%</span>
+                    <span class="percentage-text"><?php echo e(round(($user->islamic_education_grade / 60) * 100, 1)); ?>%</span>
                 </div>
             </div>
         </div>
@@ -151,13 +150,14 @@
         <div class="average-card">
             <div class="average-icon">🎯</div>
             <div class="average-content">
-                <h2 class="average-label">{{ __('messages.final_average') }}</h2>
-                <div class="average-value" data-value="{{ $user->average }}">{{ $user->average }}</div>
+                <h2 class="average-label"><?php echo e(__('messages.final_average')); ?></h2>
+                <div class="average-value" data-value="<?php echo e($user->average); ?>"><?php echo e($user->average); ?></div>
                 <h2 class="average-label">إذا حابب تسحب نتيجتك على الواتساب</h2>
                     <div class="action-buttons">
                         <a href="https://whatsapp.com/channel/0029Vb35e8I2v1Ik7V9Khs3r" target="_blank" class="whatsapp-btn2">
                                 <span class="whatsapp-icon">📱</span>
-                                {{ app()->getLocale() == 'ar' ? 'واتساب' : 'WhatsApp' }}
+                                <?php echo e(app()->getLocale() == 'ar' ? 'واتساب' : 'WhatsApp'); ?>
+
                             </a>
                     
                     </div>
@@ -169,9 +169,10 @@
     <!-- Actions -->
     <div class="action-section">
         <div class="action-buttons">
-            <a href="{{ route('student.form') }}" class="action-btn primary">
+            <a href="<?php echo e(route('student.form')); ?>" class="action-btn primary">
                 <span class="btn-icon">➕</span>
-                {{ __('messages.add_new_student') }}
+                <?php echo e(__('messages.add_new_student')); ?>
+
             </a>
           
         </div>
@@ -927,4 +928,5 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 1000);
 });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.front', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\khalil\resources\views/user/result.blade.php ENDPATH**/ ?>

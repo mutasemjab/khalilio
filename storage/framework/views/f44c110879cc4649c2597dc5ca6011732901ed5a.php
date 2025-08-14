@@ -1,11 +1,11 @@
-{{-- resources/views/layouts/front.blade.php --}}
+
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}" dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
+<html lang="<?php echo e(app()->getLocale()); ?>" dir="<?php echo e(app()->getLocale() == 'ar' ? 'rtl' : 'ltr'); ?>">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', __('messages.student_system'))</title>
+    <title><?php echo $__env->yieldContent('title', __('messages.student_system')); ?></title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -35,7 +35,7 @@
         }
 
         body {
-            font-family: {{ app()->getLocale() == 'ar' ? "'Cairo', sans-serif" : "'Inter', sans-serif" }};
+            font-family: <?php echo e(app()->getLocale() == 'ar' ? "'Cairo', sans-serif" : "'Inter', sans-serif"); ?>;
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             min-height: 100vh;
             color: var(--text-color);
@@ -740,7 +740,7 @@
             background: var(--secondary-color);
         }
     </style>
-    @stack('styles')
+    <?php echo $__env->yieldPushContent('styles'); ?>
 </head>
 
 <body>
@@ -748,18 +748,19 @@
     <div class="breaking-news">
         <div class="breaking-news-container">
             <div class="breaking-badge-section">
-                <span class="breaking-badge">{{ __('messages.breaking_news') }}</span>
+                <span class="breaking-badge"><?php echo e(__('messages.breaking_news')); ?></span>
                 <span class="breaking-icon">📢</span>
             </div>
             <div class="breaking-content">
                 <div class="breaking-text-wrapper">
-                    <span class="breaking-text">{{ __('messages.math_course_announcement') }}</span>
+                    <span class="breaking-text"><?php echo e(__('messages.math_course_announcement')); ?></span>
                 </div>
             </div>
             <div class="breaking-action">
                 <a href="https://whatsapp.com/channel/0029Vb35e8I2v1Ik7V9Khs3r" target="_blank" class="whatsapp-btn">
                     <span class="whatsapp-icon">📱</span>
-                    {{ app()->getLocale() == 'ar' ? 'واتساب' : 'WhatsApp' }}
+                    <?php echo e(app()->getLocale() == 'ar' ? 'واتساب' : 'WhatsApp'); ?>
+
                 </a>
             </div>
         </div>
@@ -769,56 +770,57 @@
     <header class="header">
         <div class="header-container">
             <div class="logo-section">
-                <img src="{{ asset('assets_front/images/logo.jpeg') }}" alt="{{ __('messages.logo') }}" class="logo">
-                <a href="{{ route('student.form') }}" class="site-title">نظام خليليو لحساب معدل طلاب جيل 2008 </a>
+                <img src="<?php echo e(asset('assets_front/images/logo.jpeg')); ?>" alt="<?php echo e(__('messages.logo')); ?>" class="logo">
+                <a href="<?php echo e(route('student.form')); ?>" class="site-title">نظام خليليو لحساب معدل طلاب جيل 2008 </a>
             </div>
 
             <div class="lang-switcher">
-                @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                    <a href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}"
-                        class="lang-btn {{ app()->getLocale() == $localeCode ? 'active' : '' }}"
-                        hreflang="{{ $localeCode }}">
+                <?php $__currentLoopData = LaravelLocalization::getSupportedLocales(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $localeCode => $properties): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <a href="<?php echo e(LaravelLocalization::getLocalizedURL($localeCode, null, [], true)); ?>"
+                        class="lang-btn <?php echo e(app()->getLocale() == $localeCode ? 'active' : ''); ?>"
+                        hreflang="<?php echo e($localeCode); ?>">
                         <span class="lang-flag">
-                            @if ($localeCode == 'ar')
+                            <?php if($localeCode == 'ar'): ?>
                                 🇯🇴
-                            @elseif($localeCode == 'en')
+                            <?php elseif($localeCode == 'en'): ?>
                                 🇺🇸
-                            @else
+                            <?php else: ?>
                                 🌐
-                            @endif
+                            <?php endif; ?>
                         </span>
-                        <span class="lang-text">{{ $properties['native'] }}</span>
+                        <span class="lang-text"><?php echo e($properties['native']); ?></span>
                     </a>
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
         </div>
     </header>
 
     <!-- Floating Particles -->
     <div class="particles">
-        @for ($i = 0; $i < 20; $i++)
+        <?php for($i = 0; $i < 20; $i++): ?>
             <div class="particle"
-                style="left: {{ rand(0, 100) }}%; animation-delay: {{ rand(0, 15) }}s; animation-duration: {{ rand(10, 20) }}s;">
+                style="left: <?php echo e(rand(0, 100)); ?>%; animation-delay: <?php echo e(rand(0, 15)); ?>s; animation-duration: <?php echo e(rand(10, 20)); ?>s;">
             </div>
-        @endfor
+        <?php endfor; ?>
     </div>
 
     <!-- Main Content -->
     <main class="main-container">
         <div class="content-card">
-            @yield('content')
+            <?php echo $__env->yieldContent('content'); ?>
         </div>
     </main>
 
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
-            <p>&copy; {{ date('Y') }} {{ __('messages.all_rights_reserved') }}</p>
-            <p>{{ __('messages.developed_with_love') }} ❤️</p>
+            <p>&copy; <?php echo e(date('Y')); ?> <?php echo e(__('messages.all_rights_reserved')); ?></p>
+            <p><?php echo e(__('messages.developed_with_love')); ?> ❤️</p>
         </div>
     </footer>
 
-    @stack('scripts')
+    <?php echo $__env->yieldPushContent('scripts'); ?>
 </body>
 
 </html>
+<?php /**PATH C:\xampp\htdocs\khalil\resources\views/layouts/front.blade.php ENDPATH**/ ?>
