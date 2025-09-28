@@ -21,4 +21,9 @@ class UserController extends Controller
         return view('admin.users.index', compact('users'));
     }
 
+    public function export()
+    {
+        return Excel::download(new UsersExport, 'users.xlsx');
+    }
+
 }

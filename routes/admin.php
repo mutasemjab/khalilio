@@ -70,7 +70,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 
       
         Route::resource('users', UserController::class);
-      
+        Route::get('/users/export', [UserController::class, 'export']);
+
     });
 });
 
