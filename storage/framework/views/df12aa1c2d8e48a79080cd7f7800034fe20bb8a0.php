@@ -1,15 +1,9 @@
-{{-- resources/views/user/student-form.blade.php --}}
-@extends('layouts.front')
+<?php $__env->startSection('title', __('messages.student_registration')); ?>
 
-@section('title', __('messages.student_registration'))
+<?php $__env->startSection('content'); ?>
 
-@section('content')
 
-{{--
-    $redirectTo is passed from the controller: 'average' | 'track' | 'quiz'
-    Used to show context-aware header so the student knows WHY they're registering.
---}}
-@php
+<?php
     $redirectTo = $redirectTo ?? session('redirect_to', 'average');
     $contextMeta = match($redirectTo) {
         'track' => [
@@ -37,21 +31,21 @@
             'next'     => 'إدخال العلامات',
         ],
     };
-@endphp
+?>
 
 <div class="form-container">
 
-    {{-- Context banner --}}
-    <div class="sf-context-banner" style="--ctx-color: {{ $contextMeta['color'] }}">
-        <span class="sf-ctx-icon">{{ $contextMeta['icon'] }}</span>
+    
+    <div class="sf-context-banner" style="--ctx-color: <?php echo e($contextMeta['color']); ?>">
+        <span class="sf-ctx-icon"><?php echo e($contextMeta['icon']); ?></span>
         <div class="sf-ctx-text">
-            <span class="sf-ctx-service">{{ $contextMeta['service'] }}</span>
-            <span class="sf-ctx-step">{{ $contextMeta['step'] }}</span>
+            <span class="sf-ctx-service"><?php echo e($contextMeta['service']); ?></span>
+            <span class="sf-ctx-step"><?php echo e($contextMeta['step']); ?></span>
         </div>
-        <a href="{{ route('hub') }}" class="sf-ctx-back">← تغيير</a>
+        <a href="<?php echo e(route('hub')); ?>" class="sf-ctx-back">← تغيير</a>
     </div>
 
-    {{-- Progress steps --}}
+    
     <div class="sf-progress">
         <div class="sf-step sf-step--active">
             <div class="sf-step-circle">1</div>
@@ -60,37 +54,37 @@
         <div class="sf-step-line"></div>
         <div class="sf-step">
             <div class="sf-step-circle">2</div>
-            <span>{{ $contextMeta['next'] }}</span>
+            <span><?php echo e($contextMeta['next']); ?></span>
         </div>
-        @if($redirectTo !== 'quiz')
+        <?php if($redirectTo !== 'quiz'): ?>
         <div class="sf-step-line"></div>
         <div class="sf-step">
             <div class="sf-step-circle">3</div>
             <span>النتيجة</span>
         </div>
-        @endif
+        <?php endif; ?>
     </div>
 
-    {{-- Header --}}
+    
     <div class="form-header">
-        <img src="{{ asset('assets_front/images/logo.jpeg') }}"
-             alt="{{ __('messages.logo') }}"
+        <img src="<?php echo e(asset('assets_front/images/logo.jpeg')); ?>"
+             alt="<?php echo e(__('messages.logo')); ?>"
              class="logo2">
         <br>
-        <a href="{{ route('student.form') }}" class="site-title">أحمد خليليو</a>
-        <h1 class="form-title">{{ __('messages.student_registration') }}</h1>
-        <p class="form-subtitle">{{ $contextMeta['subtitle'] }}</p>
+        <a href="<?php echo e(route('student.form')); ?>" class="site-title">أحمد خليليو</a>
+        <h1 class="form-title"><?php echo e(__('messages.student_registration')); ?></h1>
+        <p class="form-subtitle"><?php echo e($contextMeta['subtitle']); ?></p>
     </div>
 
-    <form method="POST" action="{{ route('student.store') }}" class="student-form" id="studentForm">
-        @csrf
+    <form method="POST" action="<?php echo e(route('student.store')); ?>" class="student-form" id="studentForm">
+        <?php echo csrf_field(); ?>
 
-        {{-- Pass redirect_to through the form --}}
-        <input type="hidden" name="redirect_to" value="{{ $redirectTo }}">
+        
+        <input type="hidden" name="redirect_to" value="<?php echo e($redirectTo); ?>">
 
         <div class="form-grid">
 
-            {{-- Full Name --}}
+            
             <div class="form-group form-group-full">
                 <label for="name" class="form-label">
                     <span class="label-icon">👤</span>
@@ -99,20 +93,27 @@
                 <input type="text"
                        id="name"
                        name="name"
-                       value="{{ old('name') }}"
-                       class="form-input {{ $errors->has('name') ? 'input-error' : '' }}"
+                       value="<?php echo e(old('name')); ?>"
+                       class="form-input <?php echo e($errors->has('name') ? 'input-error' : ''); ?>"
                        placeholder="مثال: أحمد محمد العمري"
                        required>
                 <div class="input-hint">
                     <span class="hint-icon">💡</span>
                     يجب إدخال الاسم الأول واسم الأب واسم العائلة
                 </div>
-                @error('name')
-                    <div class="error-message"><span class="error-icon">⚠️</span>{{ $message }}</div>
-                @enderror
+                <?php $__errorArgs = ['name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <div class="error-message"><span class="error-icon">⚠️</span><?php echo e($message); ?></div>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
 
-            {{-- Phone --}}
+            
             <div class="form-group">
                 <label for="phone" class="form-label">
                     <span class="label-icon">📱</span>
@@ -121,8 +122,8 @@
                 <input type="text"
                        id="phone"
                        name="phone"
-                       value="{{ old('phone') }}"
-                       class="form-input {{ $errors->has('phone') ? 'input-error' : '' }}"
+                       value="<?php echo e(old('phone')); ?>"
+                       class="form-input <?php echo e($errors->has('phone') ? 'input-error' : ''); ?>"
                        placeholder="07XXXXXXXX"
                        maxlength="10"
                        required>
@@ -130,62 +131,86 @@
                     <span class="hint-icon">💡</span>
                     يبدأ بـ 07 ويتكون من 10 أرقام
                 </div>
-                @error('phone')
-                    <div class="error-message"><span class="error-icon">⚠️</span>{{ $message }}</div>
-                @enderror
+                <?php $__errorArgs = ['phone'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <div class="error-message"><span class="error-icon">⚠️</span><?php echo e($message); ?></div>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
 
-            {{-- Generation --}}
+            
             <div class="form-group">
                 <label class="form-label">
                     <span class="label-icon">🎂</span>
                     الجيل / سنة الميلاد
                 </label>
                 <div class="generation-picker">
-                    @foreach(['2008','2009','2010'] as $gen)
-                    <label class="gen-option {{ old('generation') == $gen ? 'selected' : '' }}">
+                    <?php $__currentLoopData = ['2008','2009','2010']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $gen): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <label class="gen-option <?php echo e(old('generation') == $gen ? 'selected' : ''); ?>">
                         <input type="radio"
                                name="generation"
-                               value="{{ $gen }}"
-                               {{ old('generation') == $gen ? 'checked' : '' }}
+                               value="<?php echo e($gen); ?>"
+                               <?php echo e(old('generation') == $gen ? 'checked' : ''); ?>
+
                                required>
                         <span class="gen-label">
-                            <span class="gen-year">{{ $gen }}</span>
-                            <span class="gen-sub">جيل {{ $gen }}</span>
+                            <span class="gen-year"><?php echo e($gen); ?></span>
+                            <span class="gen-sub">جيل <?php echo e($gen); ?></span>
                         </span>
                     </label>
-                    @endforeach
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </div>
-                @error('generation')
-                    <div class="error-message"><span class="error-icon">⚠️</span>{{ $message }}</div>
-                @enderror
+                <?php $__errorArgs = ['generation'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <div class="error-message"><span class="error-icon">⚠️</span><?php echo e($message); ?></div>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
 
-            {{-- School --}}
+            
             <div class="form-group form-group-full">
                 <label for="school_name" class="form-label">
                     <span class="label-icon">🏫</span>
-                    {{ __('messages.school_name') }}
+                    <?php echo e(__('messages.school_name')); ?>
+
                 </label>
                 <input type="text"
                        id="school_name"
                        name="school_name"
-                       value="{{ old('school_name') }}"
-                       class="form-input {{ $errors->has('school_name') ? 'input-error' : '' }}"
-                       placeholder="{{ __('messages.enter_school_name') }}"
+                       value="<?php echo e(old('school_name')); ?>"
+                       class="form-input <?php echo e($errors->has('school_name') ? 'input-error' : ''); ?>"
+                       placeholder="<?php echo e(__('messages.enter_school_name')); ?>"
                        required>
-                @error('school_name')
-                    <div class="error-message"><span class="error-icon">⚠️</span>{{ $message }}</div>
-                @enderror
+                <?php $__errorArgs = ['school_name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <div class="error-message"><span class="error-icon">⚠️</span><?php echo e($message); ?></div>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
 
         </div>
 
-        {{-- Submit --}}
+        
         <div class="form-actions">
-            <button type="submit" class="submit-btn" id="submitBtn" style="--btn-color: {{ $contextMeta['color'] }}">
-                <span class="btn-icon">{{ $contextMeta['icon'] }}</span>
-                {{ __('messages.next_enter_grades') }}
+            <button type="submit" class="submit-btn" id="submitBtn" style="--btn-color: <?php echo e($contextMeta['color']); ?>">
+                <span class="btn-icon"><?php echo e($contextMeta['icon']); ?></span>
+                <?php echo e(__('messages.next_enter_grades')); ?>
+
                 <div class="btn-ripple"></div>
             </button>
         </div>
@@ -300,4 +325,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.front', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\khalil\resources\views/user/student-form.blade.php ENDPATH**/ ?>

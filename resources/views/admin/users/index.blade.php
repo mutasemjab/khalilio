@@ -21,7 +21,7 @@
                                         <th>{{ __('messages.Phone') }}</th>
                                         <th>{{ __('messages.School Name') }}</th>
                                         <th>{{ __('messages.Arabic Grade') }}</th>
-                                        <th>{{ __('messages.English Grade') }}</th>
+                                        <th>{{ __('messages.Math Grade') }}</th>
                                         <th>{{ __('messages.Jordan History Grade') }}</th>
                                         <th>{{ __('messages.Islamic Education Grade') }}</th>
                                         <th>{{ __('messages.Average') }}</th>
@@ -43,8 +43,8 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                @if($user->english_grade)
-                                                    <span class="badge badge-success">{{ $user->english_grade }}</span>
+                                                @if($user->math_grade)
+                                                    <span class="badge badge-success">{{ $user->math_grade }}</span>
                                                 @else
                                                     <span class="text-muted">{{ __('messages.Not Set') }}</span>
                                                 @endif

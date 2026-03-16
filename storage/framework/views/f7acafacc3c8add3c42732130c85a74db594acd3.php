@@ -1,9 +1,6 @@
-{{-- resources/views/user/grades-form.blade.php --}}
-@extends('layouts.front')
+<?php $__env->startSection('title', __('messages.enter_grades')); ?>
 
-@section('title', __('messages.enter_grades'))
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="grades-container">
     <!-- Student Info Card -->
     <div class="student-info-card">
@@ -11,15 +8,17 @@
             <div class="avatar-circle">👨‍🎓</div>
         </div>
         <div class="student-details">
-            <h2 class="student-name">{{ $user->name }}</h2>
+            <h2 class="student-name"><?php echo e($user->name); ?></h2>
             <div class="student-meta">
                 <span class="meta-item">
                     <span class="meta-icon">📱</span>
-                    {{ $user->phone }}
+                    <?php echo e($user->phone); ?>
+
                 </span>
                 <span class="meta-item">
                     <span class="meta-icon">🏫</span>
-                    {{ $user->school_name }}
+                    <?php echo e($user->school_name); ?>
+
                 </span>
             </div>
         </div>
@@ -30,27 +29,27 @@
         <div class="progress-bar">
             <div class="progress-step completed">
                 <div class="step-number">1</div>
-                <span class="step-label">{{ __('messages.student_info') }}</span>
+                <span class="step-label"><?php echo e(__('messages.student_info')); ?></span>
             </div>
             <div class="progress-line completed"></div>
             <div class="progress-step active">
                 <div class="step-number">2</div>
-                <span class="step-label">{{ __('messages.grades') }}</span>
+                <span class="step-label"><?php echo e(__('messages.grades')); ?></span>
             </div>
             <div class="progress-line"></div>
             <div class="progress-step">
                 <div class="step-number">3</div>
-                <span class="step-label">{{ __('messages.results') }}</span>
+                <span class="step-label"><?php echo e(__('messages.results')); ?></span>
             </div>
         </div>
         
-        <h1 class="form-title">{{ __('messages.enter_subject_grades') }}</h1>
-        <p class="form-subtitle">{{ __('messages.please_enter_grades_carefully') }}</p>
+        <h1 class="form-title"><?php echo e(__('messages.enter_subject_grades')); ?></h1>
+        <p class="form-subtitle"><?php echo e(__('messages.please_enter_grades_carefully')); ?></p>
     </div>
     
     <!-- FIXED FORM - Simple and Clean -->
-    <form method="POST" action="{{ route('grades.store', $user->id) }}" class="grades-form" id="gradesForm">
-        @csrf
+    <form method="POST" action="<?php echo e(route('grades.store', $user->id)); ?>" class="grades-form" id="gradesForm">
+        <?php echo csrf_field(); ?>
         
         <div class="subjects-grid">
             <!-- Arabic Subject -->
@@ -58,32 +57,40 @@
                 <div class="subject-header">
                     <div class="subject-icon">📚</div>
                     <div class="subject-info">
-                        <h3 class="subject-name">{{ __('messages.arabic_language') }}</h3>
-                        <span class="subject-description">{{ __('messages.arabic_desc') }}</span>
+                        <h3 class="subject-name"><?php echo e(__('messages.arabic_language')); ?></h3>
+                        <span class="subject-description"><?php echo e(__('messages.arabic_desc')); ?></span>
                     </div>
-                    <div class="max-grade-badge">{{ __('messages.out_of') }} 100</div>
+                    <div class="max-grade-badge"><?php echo e(__('messages.out_of')); ?> 100</div>
                 </div>
                 <div class="input-group">
-                    <label for="arabic_grade" class="grade-label">{{ __('messages.arabic_language') }}:</label>
+                    <label for="arabic_grade" class="grade-label"><?php echo e(__('messages.arabic_language')); ?>:</label>
                     <input 
                         type="number" 
                         name="arabic_grade" 
                         id="arabic_grade"
                         min="0" 
                         max="100" 
-                        value="{{ old('arabic_grade') }}" 
+                        value="<?php echo e(old('arabic_grade')); ?>" 
                         class="grade-input"
                         placeholder="0"
                         step="1"
                         required>
                     <span class="input-suffix">/100</span>
                 </div>
-                @error('arabic_grade')
+                <?php $__errorArgs = ['arabic_grade'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                     <div class="error-message">
                         <span class="error-icon">⚠️</span>
-                        {{ $message }}
+                        <?php echo e($message); ?>
+
                     </div>
-                @enderror
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
 
             <!-- English Subject -->
@@ -91,32 +98,40 @@
                 <div class="subject-header">
                     <div class="subject-icon">🇬🇧</div>
                     <div class="subject-info">
-                        <h3 class="subject-name">{{ __('messages.math_language') }}</h3>
-                        <span class="subject-description">{{ __('messages.math_desc') }}</span>
+                        <h3 class="subject-name"><?php echo e(__('messages.math_language')); ?></h3>
+                        <span class="subject-description"><?php echo e(__('messages.math_desc')); ?></span>
                     </div>
-                    <div class="max-grade-badge">{{ __('messages.out_of') }} 100</div>
+                    <div class="max-grade-badge"><?php echo e(__('messages.out_of')); ?> 100</div>
                 </div>
                 <div class="input-group">
-                    <label for="math_grade" class="grade-label">{{ __('messages.math_language') }}:</label>
+                    <label for="math_grade" class="grade-label"><?php echo e(__('messages.math_language')); ?>:</label>
                     <input 
                         type="number" 
                         name="math_grade" 
                         id="math_grade"
                         min="0" 
                         max="100" 
-                        value="{{ old('math_grade') }}" 
+                        value="<?php echo e(old('math_grade')); ?>" 
                         class="grade-input"
                         placeholder="0"
                         step="1"
                         required>
                     <span class="input-suffix">/100</span>
                 </div>
-                @error('math_grade')
+                <?php $__errorArgs = ['math_grade'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                     <div class="error-message">
                         <span class="error-icon">⚠️</span>
-                        {{ $message }}
+                        <?php echo e($message); ?>
+
                     </div>
-                @enderror
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
 
             <!-- Jordan History Subject -->
@@ -124,32 +139,40 @@
                 <div class="subject-header">
                     <div class="subject-icon">🏛️</div>
                     <div class="subject-info">
-                        <h3 class="subject-name">{{ __('messages.jordan_history') }}</h3>
-                        <span class="subject-description">{{ __('messages.history_desc') }}</span>
+                        <h3 class="subject-name"><?php echo e(__('messages.jordan_history')); ?></h3>
+                        <span class="subject-description"><?php echo e(__('messages.history_desc')); ?></span>
                     </div>
-                    <div class="max-grade-badge">{{ __('messages.out_of') }} 40</div>
+                    <div class="max-grade-badge"><?php echo e(__('messages.out_of')); ?> 40</div>
                 </div>
                 <div class="input-group">
-                    <label for="jordan_history_grade" class="grade-label">{{ __('messages.jordan_history') }}:</label>
+                    <label for="jordan_history_grade" class="grade-label"><?php echo e(__('messages.jordan_history')); ?>:</label>
                     <input 
                         type="number" 
                         name="jordan_history_grade" 
                         id="jordan_history_grade"
                         min="0" 
                         max="40" 
-                        value="{{ old('jordan_history_grade') }}" 
+                        value="<?php echo e(old('jordan_history_grade')); ?>" 
                         class="grade-input"
                         placeholder="0"
                         step="1"
                         required>
                     <span class="input-suffix">/40</span>
                 </div>
-                @error('jordan_history_grade')
+                <?php $__errorArgs = ['jordan_history_grade'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                     <div class="error-message">
                         <span class="error-icon">⚠️</span>
-                        {{ $message }}
+                        <?php echo e($message); ?>
+
                     </div>
-                @enderror
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
 
             <!-- Islamic Education Subject -->
@@ -157,39 +180,48 @@
                 <div class="subject-header">
                     <div class="subject-icon">☪️</div>
                     <div class="subject-info">
-                        <h3 class="subject-name">{{ __('messages.islamic_education') }}</h3>
-                        <span class="subject-description">{{ __('messages.islamic_desc') }}</span>
+                        <h3 class="subject-name"><?php echo e(__('messages.islamic_education')); ?></h3>
+                        <span class="subject-description"><?php echo e(__('messages.islamic_desc')); ?></span>
                     </div>
-                    <div class="max-grade-badge">{{ __('messages.out_of') }} 60</div>
+                    <div class="max-grade-badge"><?php echo e(__('messages.out_of')); ?> 60</div>
                 </div>
                 <div class="input-group">
-                    <label for="islamic_education_grade" class="grade-label">{{ __('messages.islamic_education') }}:</label>
+                    <label for="islamic_education_grade" class="grade-label"><?php echo e(__('messages.islamic_education')); ?>:</label>
                     <input 
                         type="number" 
                         name="islamic_education_grade" 
                         id="islamic_education_grade"
                         min="0" 
                         max="60" 
-                        value="{{ old('islamic_education_grade') }}" 
+                        value="<?php echo e(old('islamic_education_grade')); ?>" 
                         class="grade-input"
                         placeholder="0"
                         step="1"
                         required>
                     <span class="input-suffix">/60</span>
                 </div>
-                @error('islamic_education_grade')
+                <?php $__errorArgs = ['islamic_education_grade'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                     <div class="error-message">
                         <span class="error-icon">⚠️</span>
-                        {{ $message }}
+                        <?php echo e($message); ?>
+
                     </div>
-                @enderror
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
         </div>
 
         <div class="form-actions">
             <button type="submit" class="submit-btn" id="submitBtn">
                 <span class="btn-icon">🧮</span>
-                {{ __('messages.calculate_average') }}
+                <?php echo e(__('messages.calculate_average')); ?>
+
             </button>
         </div>
     </form>
@@ -671,4 +703,5 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.front', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\khalil\resources\views/user/grades-form.blade.php ENDPATH**/ ?>

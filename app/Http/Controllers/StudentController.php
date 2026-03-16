@@ -7,27 +7,69 @@ use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
-    public function showStudentForm()
+    /**
+     * Show registration form.
+     * Accepts ?redirect_to=average|track|quiz via query string.
+     * Stores it in session so the POST can read it.
+     */
+    public function showStudentForm(Request $request)
     {
-        return view('user.student-form');
+        // Remember where to redirect after successful registration
+        $redirectTo = $request->query('redirect_to', 'average'); // default → calculate average
+        session(['redirect_to' => $redirectTo]);
+
+        return view('user.student-form', compact('redirectTo'));
     }
 
+    /**
+     * Store the new student and redirect to the right service.
+     */
     public function storeStudent(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'phone' => 'required|string|max:20',
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                function ($attribute, $value, $fail) {
+                    $parts = preg_split('/\s+/', trim($value));
+                    if (count($parts) < 3) {
+                        $fail(__('messages.name_three_parts'));
+                    }
+                },
+            ],
+            'phone' => [
+                'required',
+                'string',
+                function ($attribute, $value, $fail) {
+                    $phone = preg_replace('/\s+/', '', $value);
+                    if (!preg_match('/^07\d{8}$/', $phone)) {
+                        $fail(__('messages.phone_invalid'));
+                    }
+                },
+            ],
             'school_name' => 'required|string|max:255',
+            'generation'  => 'required|in:2008,2009,2010',
         ]);
 
         $user = User::create([
-            'name' => $request->name,
-            'phone' => $request->phone,
+            'name'        => $request->name,
+            'phone'       => preg_replace('/\s+/', '', $request->phone),
             'school_name' => $request->school_name,
+            'generation'  => $request->generation,
         ]);
 
-        return redirect()->route('grades.form', $user->id);
+        // Read destination from session (set by showStudentForm)
+        $redirectTo = session('redirect_to', 'average');
+
+        return match ($redirectTo) {
+            'track' => redirect()->route('track.show', $user->id),
+            'quiz'  => redirect()->route('quiz.index', $user->id),
+            default => redirect()->route('grades.form', $user->id),   // 'average'
+        };
     }
+
+    // ── Grades / Average ─────────────────────────────────────
 
     public function showGradesForm(User $user)
     {
@@ -37,20 +79,19 @@ class StudentController extends Controller
     public function storeGrades(Request $request, User $user)
     {
         $request->validate([
-            'arabic_grade' => 'required|integer|min:0|max:100',
-            'english_grade' => 'required|integer|min:0|max:100',
-            'jordan_history_grade' => 'required|integer|min:0|max:40',
+            'arabic_grade'            => 'required|integer|min:0|max:100',
+            'math_grade'           => 'required|integer|min:0|max:100',
+            'jordan_history_grade'    => 'required|integer|min:0|max:40',
             'islamic_education_grade' => 'required|integer|min:0|max:60',
         ]);
 
         $user->update([
-            'arabic_grade' => $request->arabic_grade,
-            'english_grade' => $request->english_grade,
-            'jordan_history_grade' => $request->jordan_history_grade,
+            'arabic_grade'            => $request->arabic_grade,
+            'math_grade'           => $request->math_grade,
+            'jordan_history_grade'    => $request->jordan_history_grade,
             'islamic_education_grade' => $request->islamic_education_grade,
         ]);
 
-        // Calculate and save average
         $average = $user->calculateAverage();
         $user->update(['average' => $average]);
 

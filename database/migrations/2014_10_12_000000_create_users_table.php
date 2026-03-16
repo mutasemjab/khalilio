@@ -19,10 +19,11 @@ return new class extends Migration
             $table->string('phone');
             $table->string('school_name');
             $table->integer('arabic_grade')->nullable();
-            $table->integer('english_grade')->nullable();
+            $table->integer('math_grade')->nullable();
             $table->integer('jordan_history_grade')->nullable();
             $table->integer('islamic_education_grade')->nullable();
             $table->decimal('average', 5, 2)->nullable();
+            $table->string('generation')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
