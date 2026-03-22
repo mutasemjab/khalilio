@@ -11,9 +11,11 @@ class HubController extends Controller
     public function index()
     {
         if (!session('registered_user_id')) {
-            return redirect()->route('hub'); // → للتسجيل
+            return redirect()->route('hub');
         }
 
-        return view('user.hub');
+        $userId = session('registered_user_id'); // ✅ مررها للـ view
+
+        return view('user.hub', compact('userId'));
     }
 }

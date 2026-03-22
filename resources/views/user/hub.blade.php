@@ -26,7 +26,7 @@
         <div class="hub-grid">
 
             {{-- Card 1: كيف تعرف حقلك --}}
-            <a href="{{ route('track.show', session('registered_user_id')) }}" class="hub-card hub-card--track">
+            <a href="{{ route('track.show', $userId) }}" class="hub-card hub-card--track">
                 <div class="hub-card__glow"></div>
                 <div class="hub-card__number">01</div>
                 <div class="hub-card__icon-wrap">
@@ -41,7 +41,7 @@
             </a>
 
             {{-- Card 2: كيف تعرف مستواك بالرياضيات --}}
-            <a href="{{ route('quiz.index', session('registered_user_id')) }}" class="hub-card hub-card--math">
+            <a href="{{ route('quiz.index', $userId) }}" class="hub-card hub-card--math">
                 <div class="hub-card__glow"></div>
                 <div class="hub-card__number">02</div>
                 <div class="hub-card__icon-wrap">
@@ -56,7 +56,7 @@
             </a>
 
             {{-- Card 3: كيف تحسب معدلك --}}
-            <a href="{{ route('grades.form', session('registered_user_id')) }}" class="hub-card hub-card--avg">
+            <a href="{{ route('grades.form', $userId) }}" class="hub-card hub-card--avg">
                 <div class="hub-card__glow"></div>
                 <div class="hub-card__number">03</div>
                 <div class="hub-card__icon-wrap">
