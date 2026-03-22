@@ -24,7 +24,7 @@ Route::group([
 ], function () {
 
     // ── Hub ──────────────────────────────────────────────────
-    Route::get('/', [HubController::class, 'index'])->name('hub');
+    Route::get('/', [StudentController::class, 'showStudentForm'])->name('hub');
 
     // ── Registration ─────────────────────────────────────────
     Route::get('/register',  [StudentController::class, 'showStudentForm'])->name('student.form');

@@ -10,7 +10,7 @@
     <div class="hub-hero">
         <img src="{{ asset('assets_front/images/logo.jpeg') }}" alt="logo" class="hub-logo">
         <br>
-        <h1 class="hub-title">أهلاً بك في منصة خليليو</h1>
+        <h1 class="hub-title">أهلاً بك في عالم خليليو</h1>
         <p class="hub-subtitle">اختر ما تريد معرفته اليوم</p>
         <div class="hub-stars">
             @for($i=0;$i<12;$i++)

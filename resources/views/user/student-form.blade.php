@@ -28,13 +28,13 @@
             'step'     => 'الخطوة 1 من 2',
             'next'     => 'بدء الامتحان',
         ],
-        default => [  // average
+        default => [  // average — also used as landing
             'icon'     => '📊',
             'color'    => '#4facfe',
-            'service'  => 'حساب معدلك الدراسي',
-            'subtitle' => 'سجّل بياناتك أولاً لحساب معدلك بدقة',
-            'step'     => 'الخطوة 1 من 3',
-            'next'     => 'إدخال العلامات',
+            'service'  => 'منصة خليليو',
+            'subtitle' => 'سجّل بياناتك للبدء واستخدام جميع خدمات المنصة',
+            'step'     => 'خطوة واحدة فقط',
+            'next'     => 'الخدمات',
         ],
     };
 @endphp
@@ -183,11 +183,11 @@
 
         {{-- Submit --}}
         <div class="form-actions">
-            <button type="submit" class="submit-btn" id="submitBtn" style="--btn-color: {{ $contextMeta['color'] }}">
-                <span class="btn-icon">{{ $contextMeta['icon'] }}</span>
-                {{ __('messages.next_enter_grades') }}
-                <div class="btn-ripple"></div>
-            </button>
+           <button type="submit" class="submit-btn" id="submitBtn" style="--btn-color: {{ $contextMeta['color'] }}">
+    <span class="btn-icon">🚀</span>
+    ابدأ الآن
+    <div class="btn-ripple"></div>
+</button>
         </div>
     </form>
 </div>

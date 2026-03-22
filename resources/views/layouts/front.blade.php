@@ -770,7 +770,7 @@
         <div class="header-container">
             <div class="logo-section">
                 <img src="{{ asset('assets_front/images/logo.jpeg') }}" alt="{{ __('messages.logo') }}" class="logo">
-                <a href="{{ route('student.form') }}" class="site-title">نظام خليليو لحساب معدل طلاب جيل 2008 </a>
+                <a href="{{ route('student.form') }}" class="site-title">عالم خليليو </a>
             </div>
 
             <div class="lang-switcher">

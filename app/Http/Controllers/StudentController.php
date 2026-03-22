@@ -14,8 +14,12 @@ class StudentController extends Controller
      */
     public function showStudentForm(Request $request)
     {
-        // Remember where to redirect after successful registration
-        $redirectTo = $request->query('redirect_to', 'average'); // default → calculate average
+        // Already registered this session → go straight to hub
+        if (session('registered_user_id')) {
+            return view('user.hub');
+        }
+
+        $redirectTo = $request->query('redirect_to', 'average');
         session(['redirect_to' => $redirectTo]);
 
         return view('user.student-form', compact('redirectTo'));
@@ -25,49 +29,46 @@ class StudentController extends Controller
      * Store the new student and redirect to the right service.
      */
     public function storeStudent(Request $request)
-    {
-        $request->validate([
-            'name' => [
-                'required',
-                'string',
-                'max:255',
-                function ($attribute, $value, $fail) {
-                    $parts = preg_split('/\s+/', trim($value));
-                    if (count($parts) < 3) {
-                        $fail(__('messages.name_three_parts'));
-                    }
-                },
-            ],
-            'phone' => [
-                'required',
-                'string',
-                function ($attribute, $value, $fail) {
-                    $phone = preg_replace('/\s+/', '', $value);
-                    if (!preg_match('/^07\d{8}$/', $phone)) {
-                        $fail(__('messages.phone_invalid'));
-                    }
-                },
-            ],
-            'school_name' => 'required|string|max:255',
-            'generation'  => 'required|in:2008,2009,2010',
-        ]);
+{
+    $request->validate([
+        'name' => [
+            'required',
+            'string',
+            'max:255',
+            function ($attribute, $value, $fail) {
+                $parts = preg_split('/\s+/', trim($value));
+                if (count($parts) < 3) {
+                    $fail(__('messages.name_three_parts'));
+                }
+            },
+        ],
+        'phone' => [
+            'required',
+            'string',
+            function ($attribute, $value, $fail) {
+                $phone = preg_replace('/\s+/', '', $value);
+                if (!preg_match('/^07\d{8}$/', $phone)) {
+                    $fail(__('messages.phone_invalid'));
+                }
+            },
+        ],
+        'school_name' => 'required|string|max:255',
+        'generation'  => 'required|in:2008,2009,2010',
+    ]);
 
-        $user = User::create([
-            'name'        => $request->name,
-            'phone'       => preg_replace('/\s+/', '', $request->phone),
-            'school_name' => $request->school_name,
-            'generation'  => $request->generation,
-        ]);
+    $user = User::create([
+        'name'        => $request->name,
+        'phone'       => preg_replace('/\s+/', '', $request->phone),
+        'school_name' => $request->school_name,
+        'generation'  => $request->generation,
+    ]);
 
-        // Read destination from session (set by showStudentForm)
-        $redirectTo = session('redirect_to', 'average');
+    // ✅ Remember across session — won't see registration again
+    session(['registered_user_id' => $user->id]);
 
-        return match ($redirectTo) {
-            'track' => redirect()->route('track.show', $user->id),
-            'quiz'  => redirect()->route('quiz.index', $user->id),
-            default => redirect()->route('grades.form', $user->id),   // 'average'
-        };
-    }
+    // ✅ Always go to hub after registration
+    return redirect()->route('hub');
+}
 
     // ── Grades / Average ─────────────────────────────────────
 
