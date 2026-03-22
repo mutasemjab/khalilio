@@ -30,7 +30,8 @@
             <div class="qt-question-card" id="qCard{{ $question->id }}" data-answered="false" style="animation-delay: {{ $i * 0.08 }}s">
                 <div class="qt-q-number">
                     <span class="qt-q-num-badge">{{ $i + 1 }}</span>
-                    <span class="qt-q-type">{{ $question->type == 'true_false' ? 'صح / خطأ' : 'اختيار متعدد' }}</span>
+                    <span class="qt-q-type">{{ $question->type == 'true_false' ? __('messages.true_false') : __('messages.multiple_choice') }}</span>
+
                 </div>
 
                 <div class="qt-q-text">{{ $question->question_text }}</div>
@@ -46,12 +47,13 @@
                         <label class="qt-option" for="q{{ $question->id }}_true">
                             <input type="radio" name="q_{{ $question->id }}" id="q{{ $question->id }}_true" value="true" onchange="markAnswered({{ $question->id }})">
                             <span class="qt-option-icon">✅</span>
-                            <span class="qt-option-text">صحيح</span>
+                           <span class="qt-option-text">{{ __('messages.correct_label') }}</span>
                         </label>
                         <label class="qt-option" for="q{{ $question->id }}_false">
                             <input type="radio" name="q_{{ $question->id }}" id="q{{ $question->id }}_false" value="false" onchange="markAnswered({{ $question->id }})">
                             <span class="qt-option-icon">❌</span>
-                            <span class="qt-option-text">خطأ</span>
+                           <span class="qt-option-text">{{ __('messages.wrong_label') }}</span>
+
                         </label>
                     @else
                         @foreach(['A'=>$question->option_a,'B'=>$question->option_b,'C'=>$question->option_c,'D'=>$question->option_d] as $letter => $text)
@@ -72,10 +74,10 @@
         {{-- Submit --}}
         <div class="qt-submit-section">
             <div class="qt-submit-info">
-                <span id="finalAnswered">0</span> من {{ $questions->count() }} سؤال تمت الإجابة عليه
+                <span id="finalAnswered">0</span> {{ $questions->count() }}  {{ __('messages.questions_answered') }}
             </div>
             <button type="submit" class="qt-submit-btn" id="submitBtn" onclick="return confirmSubmit()">
-                <span>📤</span> تسليم الامتحان
+                <span>📤</span> {{ __('messages.submit_quiz') }}
             </button>
         </div>
     </form>
@@ -198,7 +200,8 @@ function confirmSubmit() {
     const total = {{ $questions->count() }};
     const answered = answeredSet.size;
     if (answered < total) {
-        return confirm(`لم تجب على ${total - answered} سؤال بعد. هل تريد التسليم الآن؟`);
+       return confirm(`{{ str_replace(':count', "' + (total - answered) + '", __('messages.unanswered_confirm')) }}`);
+
     }
     return true;
 }

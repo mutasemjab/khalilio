@@ -1,7 +1,7 @@
 {{-- resources/views/user/quiz-result.blade.php --}}
 @extends('layouts.front')
 
-@section('title', 'نتيجة الامتحان - خليليو')
+@section('title', __('messages.quiz_result_title'))
 
 @section('content')
 
@@ -28,15 +28,12 @@
     {{-- Header --}}
     <div class="qr-header">
         @if($attempt->group === 'A')
-            <div class="qr-hero-icon">🏆</div>
-            <h1 class="qr-title">أداء رائع! مجتمع A</h1>
-        @elseif($attempt->group === 'B')
-            <div class="qr-hero-icon">⭐</div>
-            <h1 class="qr-title">جيد جداً! مجتمع B</h1>
-        @else
-            <div class="qr-hero-icon">📚</div>
-            <h1 class="qr-title">استمر في التعلم! مجتمع C</h1>
-        @endif
+    <h1 class="qr-title">{{ __('messages.group_a_title') }}</h1>
+@elseif($attempt->group === 'B')
+    <h1 class="qr-title">{{ __('messages.group_b_title') }}</h1>
+@else
+    <h1 class="qr-title">{{ __('messages.group_c_title') }}</h1>
+@endif
         <p class="qr-student-name">{{ $attempt->student_name }}</p>
     </div>
 
@@ -59,13 +56,12 @@
             </svg>
             <div class="qr-score-inner">
                 <div class="qr-score-num">{{ $attempt->score }}</div>
-                <div class="qr-score-of">من {{ $totalMarks }}</div>
+              <div class="qr-score-of">{{ __('messages.from_marks') }} {{ $totalMarks }}</div>
+
             </div>
         </div>
         <div class="qr-score-info">
-            <div class="qr-group-badge">
-                المجموعة {{ $attempt->group }}
-            </div>
+           <div class="qr-group-badge">{{ __('messages.group_label') }} {{ $attempt->group }}</div>
             <div class="qr-score-pct">
                 {{ $totalMarks > 0 ? round(($attempt->score / $totalMarks) * 100) : 0 }}%
             </div>
@@ -80,19 +76,16 @@
 
     {{-- Group description --}}
     <div class="qr-group-desc-card">
-        @if($attempt->group === 'A')
-        <div class="qr-desc-icon">🌟</div>
-        <h3>أنت في المجموعة المتقدمة!</h3>
-        <p>مستواك في الرياضيات ممتاز. ستنضم لمجموعة متميزة من الطلاب لتطوير مهاراتك أكثر وأكثر.</p>
-        @elseif($attempt->group === 'B')
-        <div class="qr-desc-icon">💪</div>
-        <h3>أنت في المجموعة المتوسطة!</h3>
-        <p>مستواك جيد وتحتاج لبعض التعزيز. المجموعة B ستساعدك على سد الفجوات وتحقيق التميز.</p>
-        @else
-        <div class="qr-desc-icon">🚀</div>
-        <h3>أنت في مجموعة التعزيز!</h3>
-        <p>لا تقلق! كل عبقري بدأ من هنا. المجموعة C مصممة لبناء الأساس القوي الذي تحتاجه.</p>
-        @endif
+     @if($attempt->group === 'A')
+    <h3>{{ __('messages.group_a_desc_title') }}</h3>
+    <p>{{ __('messages.group_a_desc') }}</p>
+@elseif($attempt->group === 'B')
+    <h3>{{ __('messages.group_b_desc_title') }}</h3>
+    <p>{{ __('messages.group_b_desc') }}</p>
+@else
+    <h3>{{ __('messages.group_c_desc_title') }}</h3>
+    <p>{{ __('messages.group_c_desc') }}</p>
+@endif
     </div>
 
     {{-- WhatsApp CTA --}}
@@ -108,19 +101,19 @@
         <div class="qr-wa-content">
             <div class="qr-wa-icon">📲</div>
             <div class="qr-wa-text">
-                <h3>انضم الآن لمجموعة {{ $attempt->group }}</h3>
-                <p>انقر على الزر للانضمام لقناة الواتساب الخاصة بمجموعتك</p>
+               <h3>{{ __('messages.join_group') }} {{ $attempt->group }}</h3>
+               <p>{{ __('messages.join_wa_group') }}</p>
             </div>
         </div>
-        <a href="{{ $waLink }}" target="_blank" class="qr-wa-btn">
-            📱 انضم لمجموعة {{ $attempt->group }} الآن
-        </a>
+       <a href="{{ $waLink }}" class="qr-wa-btn">
+    📱 {{ __('messages.join_group_btn') }} {{ $attempt->group }} {{ __('messages.now_label') }}
+</a>
     </div>
 
     {{-- Answers review — SAFE with decoded array --}}
     @if(count($answers) > 0)
     <div class="qr-review">
-        <h3 class="qr-review-title">📋 مراجعة إجاباتك</h3>
+        <h3 class="qr-review-title">{{ __('messages.answers_review') }}</h3>
 
         {{-- Summary row --}}
         <div class="qr-review-summary">
@@ -132,17 +125,20 @@
             <div class="qr-summary-item qr-summary--correct">
                 <span class="qr-summary-icon">✅</span>
                 <span class="qr-summary-num">{{ $correctCount }}</span>
-                <span class="qr-summary-label">صحيحة</span>
+                <span class="qr-summary-label">{{ __('messages.correct_answers') }}</span>
+
             </div>
             <div class="qr-summary-item qr-summary--wrong">
                 <span class="qr-summary-icon">❌</span>
                 <span class="qr-summary-num">{{ $wrongCount }}</span>
-                <span class="qr-summary-label">خاطئة</span>
+               <span class="qr-summary-label">{{ __('messages.wrong_answers') }}</span>
+
             </div>
             <div class="qr-summary-item qr-summary--marks">
                 <span class="qr-summary-icon">⭐</span>
                 <span class="qr-summary-num">{{ $earnedMarks }}</span>
-                <span class="qr-summary-label">من {{ $totalMarks }}</span>
+               <span class="qr-summary-label">{{ __('messages.from_marks') }} {{ $totalMarks }}</span>
+
             </div>
         </div>
 
@@ -179,8 +175,8 @@
     {{-- Actions --}}
     <div class="qr-actions">
         <a href="{{ route('quiz.index', ['user' => session('quiz_user_id', 1)]) }}"
-           class="qr-btn qr-btn--secondary">🔄 أعد الامتحان</a>
-        <a href="{{ route('hub') }}" class="qr-btn qr-btn--primary">🏠 الرئيسية</a>
+           class="qr-btn qr-btn--secondary">🔄 {{ __('messages.retake_quiz') }}</a>
+        <a href="{{ route('hub') }}" class="qr-btn qr-btn--primary">🏠 {{ __('messages.home_page') }}</a>
     </div>
 
 </div>

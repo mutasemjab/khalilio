@@ -8,10 +8,10 @@
 
     {{-- Header --}}
     <div class="ts-header">
-        <a href="{{ route('hub') }}" class="ts-back">← العودة</a>
+        <a href="{{ route('hub.home') }}" class="ts-back">{{ __('messages.back') }}</a>
         <div class="ts-crown">👑</div>
-        <h1 class="ts-title">جيش الفل والأوائل</h1>
-        <p class="ts-subtitle">هؤلاء هم أوائل الطلاب الذين حققوا إنجازات رائعة</p>
+      <h1 class="ts-title">{{ __('messages.top_students_title') }}</h1>
+<p class="ts-subtitle">{{ __('messages.top_students_subtitle') }}</p>
         <div class="ts-sparkles">
             @for($i=0;$i<8;$i++)
             <span class="ts-sparkle" style="--x:{{ rand(5,95) }}%;--y:{{ rand(5,90) }}%;--d:{{ rand(3,7) }}s;--size:{{ rand(10,20) }}px">✦</span>
@@ -56,7 +56,7 @@
                         @else
                             <div class="ts-thumb-placeholder">📋</div>
                         @endif
-                        <div class="ts-thumb-label">كشف العلامات</div>
+                       <div class="ts-thumb-label">{{ __('messages.grades_sheet') }}</div>
                     </div>
                     <div class="ts-thumb" onclick="openPhotoModal('{{ $student->certificate_photo ? asset('assets/admin/uploads/'.$student->certificate_photo) : '' }}', 'الشهادة')">
                         @if($student->certificate_photo)
@@ -64,7 +64,8 @@
                         @else
                             <div class="ts-thumb-placeholder">🏅</div>
                         @endif
-                        <div class="ts-thumb-label">الشهادة</div>
+                        <div class="ts-thumb-label">{{ __('messages.certificate') }}</div>
+
                     </div>
                 </div>
             </div>
@@ -77,7 +78,8 @@
                 @endif
                 @if($student->average)
                 <div class="ts-avg">
-                    <span class="ts-avg-label">المعدل</span>
+                  <span class="ts-avg-label">{{ __('messages.average_label') }}</span>
+
                     <span class="ts-avg-val">{{ $student->average }}%</span>
                 </div>
                 @endif
@@ -96,10 +98,11 @@
     {{-- Join CTA --}}
     <div class="ts-cta">
         <div class="ts-cta-emoji">🌟</div>
-        <h2 class="ts-cta-title">حابب تكون من ضمنهم؟</h2>
-        <p class="ts-cta-text">تفضل انضم لقناة الواتساب حتى تكون من جيش الفل والأوائل</p>
+       <h2 class="ts-cta-title">{{ __('messages.want_to_join') }}</h2>
+      <p class="ts-cta-text">{{ __('messages.join_whatsapp_cta') }}</p>
+
         <a href="https://whatsapp.com/channel/0029Vb35e8I2v1Ik7V9Khs3r" target="_blank" class="ts-cta-btn">
-            <span>📱</span> انضم لجيش الفل الآن
+            <span>📱</span>  {{ __('messages.join_army') }}
         </a>
     </div>
 
@@ -107,9 +110,9 @@
     {{-- Empty state --}}
     <div class="ts-empty">
         <div class="ts-empty-icon">🏆</div>
-        <h3>قريباً سيتم إضافة الأوائل</h3>
-        <p>ترقب قائمة الأوائل قريباً</p>
-        <a href="{{ route('hub') }}" class="ts-back-btn">← العودة للرئيسية</a>
+        <h3>{{ __('messages.top_coming_soon') }}</h3>
+        <p>{{ __('messages.top_coming_soon_desc') }}</p>
+        <a href="{{ route('hub.home') }}" class="ts-back-btn">← {{ __('messages.back_to_home') }}</a>
     </div>
     @endif
 

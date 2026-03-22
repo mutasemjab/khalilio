@@ -11,32 +11,33 @@
 --}}
 @php
     $redirectTo = $redirectTo ?? session('redirect_to', 'average');
-    $contextMeta = match($redirectTo) {
-        'track' => [
-            'icon'     => '🧭',
-            'color'    => '#667eea',
-            'service'  => 'معرفة حقلك الدراسي',
-            'subtitle' => 'سجّل بياناتك أولاً لتتمكن من معرفة الحقل المناسب لك',
-            'step'     => 'الخطوة 1 من 3',
-            'next'     => 'إدخال علامات المواد',
-        ],
-        'quiz' => [
-            'icon'     => '🧮',
-            'color'    => '#f5576c',
-            'service'  => 'الامتحان التشخيصي بالرياضيات',
-            'subtitle' => 'سجّل بياناتك أولاً للبدء بالامتحان التشخيصي',
-            'step'     => 'الخطوة 1 من 2',
-            'next'     => 'بدء الامتحان',
-        ],
-        default => [  // average — also used as landing
-            'icon'     => '📊',
-            'color'    => '#4facfe',
-            'service'  => 'منصة خليليو',
-            'subtitle' => 'سجّل بياناتك للبدء واستخدام جميع خدمات المنصة',
-            'step'     => 'خطوة واحدة فقط',
-            'next'     => 'الخدمات',
-        ],
-    };
+   // @php block — replace hardcoded Arabic with __()
+$contextMeta = match($redirectTo) {
+    'track' => [
+        'icon'     => '🧭',
+        'color'    => '#667eea',
+        'service'  => __('messages.service_track'),
+        'subtitle' => __('messages.service_track_subtitle'),
+        'step'     => __('messages.service_track_step'),
+        'next'     => __('messages.service_track_next'),
+    ],
+    'quiz' => [
+        'icon'     => '🧮',
+        'color'    => '#f5576c',
+        'service'  => __('messages.service_quiz'),
+        'subtitle' => __('messages.service_quiz_subtitle'),
+        'step'     => __('messages.service_quiz_step'),
+        'next'     => __('messages.service_quiz_next'),
+    ],
+    default => [
+        'icon'     => '📊',
+        'color'    => '#4facfe',
+        'service'  => __('messages.service_avg'),
+        'subtitle' => __('messages.service_avg_subtitle'),
+        'step'     => __('messages.service_avg_step'),
+        'next'     => __('messages.service_avg_next'),
+    ],
+};
 @endphp
 
 <div class="form-container">
@@ -46,7 +47,7 @@
     <div class="sf-progress">
         <div class="sf-step sf-step--active">
             <div class="sf-step-circle">1</div>
-            <span>بياناتك</span>
+         <span>{{ __('messages.your_data') }}</span>
         </div>
         <div class="sf-step-line"></div>
         <div class="sf-step">
@@ -57,7 +58,8 @@
         <div class="sf-step-line"></div>
         <div class="sf-step">
             <div class="sf-step-circle">3</div>
-            <span>النتيجة</span>
+        <span>{{ __('messages.result') }}</span>
+
         </div>
         @endif
     </div>
@@ -85,18 +87,18 @@
             <div class="form-group form-group-full">
                 <label for="name" class="form-label">
                     <span class="label-icon">👤</span>
-                    الاسم الكامل (ثلاثة مقاطع)
+                   {{ __('messages.full_name') }}
                 </label>
                 <input type="text"
                        id="name"
                        name="name"
                        value="{{ old('name') }}"
                        class="form-input {{ $errors->has('name') ? 'input-error' : '' }}"
-                       placeholder="مثال: أحمد محمد العمري"
+                       placeholder="{{ __('messages.full_name_placeholder') }}"
                        required>
                 <div class="input-hint">
                     <span class="hint-icon">💡</span>
-                    يجب إدخال الاسم الأول واسم الأب واسم العائلة
+                    {{ __('messages.full_name_hint') }}
                 </div>
                 @error('name')
                     <div class="error-message"><span class="error-icon">⚠️</span>{{ $message }}</div>
@@ -107,7 +109,7 @@
             <div class="form-group">
                 <label for="phone" class="form-label">
                     <span class="label-icon">📱</span>
-                    رقم الهاتف
+                   {{ __('messages.phone') }}
                 </label>
                 <input type="text"
                        id="phone"
@@ -119,7 +121,7 @@
                        required>
                 <div class="input-hint">
                     <span class="hint-icon">💡</span>
-                    يبدأ بـ 07 ويتكون من 10 أرقام
+                  {{ __('messages.phone_hint') }}
                 </div>
                 @error('phone')
                     <div class="error-message"><span class="error-icon">⚠️</span>{{ $message }}</div>
@@ -130,7 +132,7 @@
             <div class="form-group">
                 <label class="form-label">
                     <span class="label-icon">🎂</span>
-                    الجيل / سنة الميلاد
+                   {{ __('messages.generation_label') }}
                 </label>
                 <div class="generation-picker">
                     @foreach(['2008','2009','2010'] as $gen)
@@ -176,7 +178,7 @@
         <div class="form-actions">
            <button type="submit" class="submit-btn" id="submitBtn" style="--btn-color: {{ $contextMeta['color'] }}">
     <span class="btn-icon">🚀</span>
-    ابدأ الآن
+    {{ __('messages.start_now') }}
     <div class="btn-ripple"></div>
 </button>
         </div>

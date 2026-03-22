@@ -2,8 +2,7 @@
 {{-- Public landing: no {user} needed. Shows quiz info + CTA to register --}}
 @extends('layouts.front')
 
-@section('title', app()->getLocale() == 'ar' ? 'امتحان الرياضيات - خليليو' : 'Math Quiz - Khaleelio')
-
+@section('title', __('messages.quiz_landing_title') . ' - خليليو')
 @section('content')
 <div class="ql-wrapper">
 

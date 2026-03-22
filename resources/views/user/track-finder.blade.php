@@ -9,10 +9,10 @@
 
         {{-- Header --}}
         <div class="tf-header">
-            <a href="{{ route('hub') }}" class="tf-back">← العودة</a>
-            <div class="tf-badge">🧭 حقلك الدراسي</div>
-            <h1 class="tf-title">كيف تعرف حقلك؟</h1>
-            <p class="tf-subtitle">أدخل علاماتك في مواد الصف العاشر واعرف أي حقل يناسبك</p>
+            <a href="{{ route('hub') }}" class="tf-back">{{ __('messages.back') }}</a>
+            <div class="tf-badge">{{ __('messages.track_badge') }}</div>
+            <h1 class="tf-title">{{ __('messages.track_title') }}</h1>
+            <p class="tf-subtitle">{{ __('messages.track_subtitle') }}</p>
         </div>
 
         {{-- Student welcome bar --}}
@@ -22,7 +22,7 @@
                 <span class="tf-student-name">{{ $user->name }}</span>
                 <span class="tf-student-meta">{{ $user->school_name }} • جيل {{ $user->generation }}</span>
             </div>
-            <span class="tf-student-step">الخطوة 2 من 3 ✏️</span>
+            <span class="tf-student-step">{{ __('messages.step_2_of_3') }}</span>
         </div>
 
 
@@ -104,7 +104,7 @@
             {{-- Live total --}}
             <div class="tf-total-bar">
                 <div class="tf-total-inner">
-                    <span class="tf-total-label">المجموع الكلي</span>
+                    <span class="tf-total-label"> {{ __('messages.total_score') }}</span>
                     <span class="tf-total-value" id="liveTotal">0</span>
                     <span class="tf-total-max">/ 1600</span>
                     <div class="tf-total-percent" id="livePct">0%</div>
@@ -114,7 +114,7 @@
             <div class="tf-submit-wrap">
                 <button type="submit" class="tf-submit-btn">
                     <span class="tf-submit-icon">🧭</span>
-                    اعرف حقلك الآن
+                    {{ __('messages.find_my_track') }}
                     <div class="tf-btn-shine"></div>
                 </button>
             </div>

@@ -10,8 +10,8 @@
         <div class="hub-hero">
             <img src="{{ asset('assets_front/images/logo.jpeg') }}" alt="logo" class="hub-logo">
             <br>
-            <h1 class="hub-title">أهلاً بك في عالم خليليو</h1>
-            <p class="hub-subtitle">اختر ما تريد معرفته اليوم</p>
+            <h1 class="hub-title">{{ __('messages.hub_title') }}</h1>
+            <p class="hub-subtitle">{{ __('messages.hub_subtitle') }}</p>
             <div class="hub-stars">
                 @for ($i = 0; $i < 12; $i++)
                     <span class="hub-star"
@@ -33,9 +33,8 @@
                     <span class="hub-card__icon">🧭</span>
                     <div class="hub-card__ring"></div>
                 </div>
-                <h2 class="hub-card__title">كيف تعرف حقلك</h2>
-                <p class="hub-card__desc">أدخل علامات مواد الصف العاشر واعرف أي حقل يناسبك من بين الصحي والتكنولوجي والأعمال
-                    واللغات والشريعة</p>
+                <h2 class="hub-card__title">{{ __('messages.card_track_title') }}</h2>
+                <p class="hub-card__desc">{{ __('messages.card_track_desc') }}</p>
                 <div class="hub-card__arrow">←</div>
                 <div class="hub-card__shine"></div>
             </a>
@@ -48,9 +47,8 @@
                     <span class="hub-card__icon">🧮</span>
                     <div class="hub-card__ring"></div>
                 </div>
-                <h2 class="hub-card__title">كيف تعرف مستواك بالرياضيات</h2>
-                <p class="hub-card__desc">اخضع لاختبار تشخيصي تفاعلي وتعرف على مستواك الحقيقي في الرياضيات وانضم للمجموعة
-                    المناسبة لك</p>
+                <h2 class="hub-card__title">{{ __('messages.card_math_title') }}</h2>
+                <p class="hub-card__desc">{{ __('messages.card_math_desc') }}</p>
                 <div class="hub-card__arrow">←</div>
                 <div class="hub-card__shine"></div>
             </a>
@@ -63,8 +61,8 @@
                     <span class="hub-card__icon">📊</span>
                     <div class="hub-card__ring"></div>
                 </div>
-                <h2 class="hub-card__title">كيف تحسب معدلك</h2>
-                <p class="hub-card__desc">أدخل علاماتك في المواد الأربعة لجيل 2008 واحسب معدلك الدراسي بدقة وسهولة</p>
+                <h2 class="hub-card__title">{{ __('messages.card_avg_title') }}</h2>
+                <p class="hub-card__desc">{{ __('messages.card_avg_desc') }}</p>
                 <div class="hub-card__arrow">←</div>
                 <div class="hub-card__shine"></div>
             </a>
@@ -77,8 +75,8 @@
                     <span class="hub-card__icon">🏆</span>
                     <div class="hub-card__ring"></div>
                 </div>
-                <h2 class="hub-card__title">الأوائل</h2>
-                <p class="hub-card__desc">تعرف على الطلاب الأوائل وإنجازاتهم وشهاداتهم وانضم إلى جيش الفل والأوائل</p>
+                <h2 class="hub-card__title">{{ __('messages.card_top_title') }}</h2>
+                <p class="hub-card__desc">{{ __('messages.card_top_desc') }}</p>
                 <div class="hub-card__arrow">←</div>
                 <div class="hub-card__shine"></div>
             </a>
@@ -90,11 +88,11 @@
             <div class="hub-cta__inner">
                 <div class="hub-cta__icon">📲</div>
                 <div class="hub-cta__text">
-                    <strong>انضم لقناة الواتساب الآن</strong>
-                    <span>وتابع كل جديد وخطتك الدراسية على مدار الساعة</span>
+                    <strong>{{ __('messages.whatsapp_join') }}</strong>
+                    <span>{{ __('messages.whatsapp_follow') }}</span>
                 </div>
                 <a href="https://whatsapp.com/channel/0029Vb35e8I2v1Ik7V9Khs3r" target="_blank" class="hub-cta__btn">
-                    <span>📱</span> انضم الآن
+                    <span>📱</span> {{ __('messages.join_now') }}
                 </a>
             </div>
         </div>
