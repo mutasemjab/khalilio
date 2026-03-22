@@ -41,15 +41,6 @@
 
 <div class="form-container">
 
-    {{-- Context banner --}}
-    <div class="sf-context-banner" style="--ctx-color: {{ $contextMeta['color'] }}">
-        <span class="sf-ctx-icon">{{ $contextMeta['icon'] }}</span>
-        <div class="sf-ctx-text">
-            <span class="sf-ctx-service">{{ $contextMeta['service'] }}</span>
-            <span class="sf-ctx-step">{{ $contextMeta['step'] }}</span>
-        </div>
-        <a href="{{ route('hub') }}" class="sf-ctx-back">← تغيير</a>
-    </div>
 
     {{-- Progress steps --}}
     <div class="sf-progress">
