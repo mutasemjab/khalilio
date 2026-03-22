@@ -17,14 +17,14 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 | quiz.index    → /quiz/{user}       user-specific start page
 |
 */
-
 Route::group([
     'prefix'     => LaravelLocalization::setLocale(),
     'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath'],
 ], function () {
 
     // ── Hub ──────────────────────────────────────────────────
-    Route::get('/', [StudentController::class, 'showStudentForm'])->name('hub');
+    Route::get('/',      [StudentController::class, 'showStudentForm'])->name('hub');
+    Route::get('/home',  [HubController::class, 'index'])->name('hub.home'); // ✅ أضف هذا
 
     // ── Registration ─────────────────────────────────────────
     Route::get('/register',  [StudentController::class, 'showStudentForm'])->name('student.form');
@@ -43,17 +43,10 @@ Route::group([
     Route::get('/top-students', [TopStudentController::class, 'index'])->name('top-students.index');
 
     // ── Quiz ─────────────────────────────────────────────────
-    // Public landing (used by sidebar link — no user needed)
-    Route::get('/quiz',                      [QuizController::class, 'landing'])->name('quiz.landing');
-
-    // IMPORTANT: /quiz/result must be defined BEFORE /quiz/{user}
-    // otherwise Laravel will try to match "result" as a {user} param
-    Route::get('/quiz/result/{attempt}',     [QuizController::class, 'result'])->name('quiz.result');
-
-    // User-specific quiz page (after registration)
-    Route::get('/quiz/{user}',               [QuizController::class, 'index'])->name('quiz.index');
-
-    Route::post('/quiz/{quiz}/start',        [QuizController::class, 'start'])->name('quiz.start');
-    Route::post('/quiz/{quiz}/submit',       [QuizController::class, 'submit'])->name('quiz.submit');
+    Route::get('/quiz',                  [QuizController::class, 'landing'])->name('quiz.landing');
+    Route::get('/quiz/result/{attempt}', [QuizController::class, 'result'])->name('quiz.result');
+    Route::get('/quiz/{user}',           [QuizController::class, 'index'])->name('quiz.index');
+    Route::post('/quiz/{quiz}/start',    [QuizController::class, 'start'])->name('quiz.start');
+    Route::post('/quiz/{quiz}/submit',   [QuizController::class, 'submit'])->name('quiz.submit');
 
 });
