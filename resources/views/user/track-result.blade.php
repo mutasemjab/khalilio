@@ -120,10 +120,10 @@
     </div>
 
     {{-- Actions --}}
-    <div class="tr-actions">
-        <a href="{{ route('track.show') }}" class="tr-btn tr-btn--secondary">🔄 أعد الحساب</a>
-        <a href="{{ route('hub') }}" class="tr-btn tr-btn--primary">🏠 الصفحة الرئيسية</a>
-    </div>
+<div class="tr-actions">
+    <a href="{{ route('track.show', $user->id) }}" class="tr-btn tr-btn--secondary">🔄 أعد الحساب</a>
+    <a href="{{ route('hub.home') }}" class="tr-btn tr-btn--primary">🏠 الصفحة الرئيسية</a>
+</div>
 
 </div>
 
