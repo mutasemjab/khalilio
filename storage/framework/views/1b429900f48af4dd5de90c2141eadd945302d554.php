@@ -152,7 +152,7 @@
             <div class="average-content">
                 <h2 class="average-label"><?php echo e(__('messages.final_average')); ?></h2>
                 <div class="average-value" data-value="<?php echo e($user->average); ?>"><?php echo e($user->average); ?></div>
-                <h2 class="average-label">إذا حابب تسحب نتيجتك على الواتساب</h2>
+                <h2 class="average-label"><?php echo e(__('messages.whatsapp_result')); ?></h2>
                     <div class="action-buttons">
                         <a href="https://whatsapp.com/channel/0029Vb35e8I2v1Ik7V9Khs3r" target="_blank" class="whatsapp-btn2">
                                 <span class="whatsapp-icon">📱</span>
@@ -170,8 +170,7 @@
     <div class="action-section">
         <div class="action-buttons">
             <a href="<?php echo e(route('student.form')); ?>" class="action-btn primary">
-                <span class="btn-icon">➕</span>
-                <?php echo e(__('messages.add_new_student')); ?>
+                <?php echo e(__('messages.Home')); ?>
 
             </a>
           

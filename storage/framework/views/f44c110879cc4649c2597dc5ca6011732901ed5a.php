@@ -771,7 +771,7 @@
         <div class="header-container">
             <div class="logo-section">
                 <img src="<?php echo e(asset('assets_front/images/logo.jpeg')); ?>" alt="<?php echo e(__('messages.logo')); ?>" class="logo">
-                <a href="<?php echo e(route('student.form')); ?>" class="site-title">نظام خليليو لحساب معدل طلاب جيل 2008 </a>
+                <a href="<?php echo e(route('student.form')); ?>" class="site-title">عالم خليليو </a>
             </div>
 
             <div class="lang-switcher">

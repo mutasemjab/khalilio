@@ -28,7 +28,8 @@
             <div class="qt-question-card" id="qCard<?php echo e($question->id); ?>" data-answered="false" style="animation-delay: <?php echo e($i * 0.08); ?>s">
                 <div class="qt-q-number">
                     <span class="qt-q-num-badge"><?php echo e($i + 1); ?></span>
-                    <span class="qt-q-type"><?php echo e($question->type == 'true_false' ? 'صح / خطأ' : 'اختيار متعدد'); ?></span>
+                    <span class="qt-q-type"><?php echo e($question->type == 'true_false' ? __('messages.true_false') : __('messages.multiple_choice')); ?></span>
+
                 </div>
 
                 <div class="qt-q-text"><?php echo e($question->question_text); ?></div>
@@ -44,12 +45,13 @@
                         <label class="qt-option" for="q<?php echo e($question->id); ?>_true">
                             <input type="radio" name="q_<?php echo e($question->id); ?>" id="q<?php echo e($question->id); ?>_true" value="true" onchange="markAnswered(<?php echo e($question->id); ?>)">
                             <span class="qt-option-icon">✅</span>
-                            <span class="qt-option-text">صحيح</span>
+                           <span class="qt-option-text"><?php echo e(__('messages.correct_label')); ?></span>
                         </label>
                         <label class="qt-option" for="q<?php echo e($question->id); ?>_false">
                             <input type="radio" name="q_<?php echo e($question->id); ?>" id="q<?php echo e($question->id); ?>_false" value="false" onchange="markAnswered(<?php echo e($question->id); ?>)">
                             <span class="qt-option-icon">❌</span>
-                            <span class="qt-option-text">خطأ</span>
+                           <span class="qt-option-text"><?php echo e(__('messages.wrong_label')); ?></span>
+
                         </label>
                     <?php else: ?>
                         <?php $__currentLoopData = ['A'=>$question->option_a,'B'=>$question->option_b,'C'=>$question->option_c,'D'=>$question->option_d]; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $letter => $text): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -70,10 +72,12 @@
         
         <div class="qt-submit-section">
             <div class="qt-submit-info">
-                <span id="finalAnswered">0</span> من <?php echo e($questions->count()); ?> سؤال تمت الإجابة عليه
+                <span id="finalAnswered">0</span> <?php echo e($questions->count()); ?>  <?php echo e(__('messages.questions_answered')); ?>
+
             </div>
             <button type="submit" class="qt-submit-btn" id="submitBtn" onclick="return confirmSubmit()">
-                <span>📤</span> تسليم الامتحان
+                <span>📤</span> <?php echo e(__('messages.submit_quiz')); ?>
+
             </button>
         </div>
     </form>
@@ -196,7 +200,8 @@ function confirmSubmit() {
     const total = <?php echo e($questions->count()); ?>;
     const answered = answeredSet.size;
     if (answered < total) {
-        return confirm(`لم تجب على ${total - answered} سؤال بعد. هل تريد التسليم الآن؟`);
+       return confirm(`<?php echo e(str_replace(':count', "' + (total - answered) + '", __('messages.unanswered_confirm'))); ?>`);
+
     }
     return true;
 }

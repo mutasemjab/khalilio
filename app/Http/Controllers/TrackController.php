@@ -43,13 +43,13 @@ class TrackController extends Controller
     $percentage = round(($totalScore / $totalMax) * 100, 2);
 
     if ($percentage >= 90) {
-        $tracks = ['الصحي', 'التكنولوجي', 'الأعمال', 'اللغات', 'الشريعة'];
+        $tracks = ['الصحي', 'الهندسي والتكنولوجي', 'الأعمال', 'اللغات والشريعة'];
     } elseif ($percentage >= 80) {
-        $tracks = ['التكنولوجي', 'الأعمال', 'اللغات', 'الشريعة'];
+        $tracks = ['الهندسي والتكنولوجي', 'الأعمال', 'اللغات والشريعة'];
     } elseif ($percentage >= 70) {
-        $tracks = ['الأعمال', 'اللغات', 'الشريعة'];
+        $tracks = ['الأعمال', 'اللغات والشريعة'];
     } elseif ($percentage >= 50) {
-        $tracks = ['اللغات', 'الشريعة'];
+        $tracks = ['اللغات والشريعة'];
     } else {
         $tracks = [];
     }

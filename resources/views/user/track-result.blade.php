@@ -21,8 +21,8 @@
                             stroke-width="10" />
                         <circle cx="60" cy="60" r="54" fill="none" stroke="white" stroke-width="10"
                             stroke-dasharray="{{ round(2 * 3.14159 * 54) }}"
-                            stroke-dashoffset="{{ round(2 * 3.14159 * 54 * (1 - $percentage / 100)) }}" stroke-linecap="round"
-                            transform="rotate(-90 60 60)" class="tr-score-ring" />
+                            stroke-dashoffset="{{ round(2 * 3.14159 * 54 * (1 - $percentage / 100)) }}"
+                            stroke-linecap="round" transform="rotate(-90 60 60)" class="tr-score-ring" />
                     </svg>
                     <div class="tr-score-center">
                         <div class="tr-score-num">{{ $percentage }}%</div>
@@ -40,14 +40,19 @@
                     <span class="tr-score-label">{{ __('messages.percentage') }}</span>
                     <span class="tr-score-val big">{{ $percentage }}%</span>
                 </div>
-              @php
-$tier = $percentage >= 90 ? __('messages.tier_excellent')
-      : ($percentage >= 80 ? __('messages.tier_very_good')
-      : ($percentage >= 70 ? __('messages.tier_good')
-      : ($percentage >= 50 ? __('messages.tier_acceptable')
-      : __('messages.tier_needs_work'))));
-@endphp
-                <div class="tr-tier" style="background: {{ $tierColor }}">{{ $tier }}</div>
+                @php
+                    $tier =
+                        $percentage >= 90
+                            ? __('messages.tier_excellent')
+                            : ($percentage >= 80
+                                ? __('messages.tier_very_good')
+                                : ($percentage >= 70
+                                    ? __('messages.tier_good')
+                                    : ($percentage >= 50
+                                        ? __('messages.tier_acceptable')
+                                        : __('messages.tier_needs_work'))));
+                @endphp
+                <div class="tr-tier">{{ $tier }}</div>
             </div>
         </div>
 
@@ -86,7 +91,7 @@ $tier = $percentage >= 90 ? __('messages.tier_excellent')
                                 'color' => '#e74c3c',
                                 'desc' => 'مجال الطب والصيدلة والتمريض وعلوم الصحة',
                             ],
-                            'التكنولوجي' => [
+                            'الهندسي والتكنولوجي' => [
                                 'icon' => '💻',
                                 'color' => '#3498db',
                                 'desc' => 'مجال الهندسة والحاسوب والتكنولوجيا',
@@ -96,23 +101,21 @@ $tier = $percentage >= 90 ? __('messages.tier_excellent')
                                 'color' => '#f39c12',
                                 'desc' => 'مجال المحاسبة والاقتصاد وإدارة الأعمال',
                             ],
-                            'اللغات' => [
+                            'اللغات والشريعة' => [
                                 'icon' => '🌍',
                                 'color' => '#9b59b6',
                                 'desc' => 'مجال الترجمة والأدب واللغات الأجنبية',
                             ],
-                            'الشريعة' => [
-                                'icon' => '📖',
-                                'color' => '#27ae60',
-                                'desc' => 'مجال الفقه والشريعة الإسلامية والقانون',
-                            ],
+                            
                         ];
                     @endphp
                     @foreach ($tracks as $i => $track)
                         @php $meta = $trackMeta[$track] ?? ['icon'=>'📚','color'=>'#667eea','desc'=>'']; @endphp
                         <div class="tr-track-card"
                             style="--tc: {{ $meta['color'] }}; animation-delay: {{ $i * 0.12 }}s">
-                         @if($i === 0)<div class="tr-track-badge">{{ __('messages.best') }}</div>@endif
+                            @if ($i === 0)
+                                <div class="tr-track-badge">{{ __('messages.best') }}</div>
+                            @endif
                             <div class="tr-track-icon">{{ $meta['icon'] }}</div>
                             <h3 class="tr-track-name">{{ $track }}</h3>
                             <p class="tr-track-desc">{{ $meta['desc'] }}</p>
@@ -125,7 +128,7 @@ $tier = $percentage >= 90 ? __('messages.tier_excellent')
                     <div class="tr-wa-inner">
                         <span class="tr-wa-icon">📲</span>
                         <div class="tr-wa-text">
-                           <span>{{ __('messages.whatsapp_plan') }}</span>
+                            <span>{{ __('messages.whatsapp_plan') }}</span>
                         </div>
                         <a href="https://whatsapp.com/channel/0029Vb35e8I2v1Ik7V9Khs3r" target="_blank" class="tr-wa-btn">
                             📱 {{ __('messages.join_now') }}
@@ -135,24 +138,68 @@ $tier = $percentage >= 90 ? __('messages.tier_excellent')
             @else
                 <div class="tr-no-tracks">
                     <div class="tr-no-icon">😔</div>
-                 <h3>{{ __('messages.below_50') }}</h3>
-<p>{{ __('messages.below_50_desc') }}</p>
-<a href="https://whatsapp.com/channel/0029Vb35e8I2v1Ik7V9Khs3r" target="_blank" class="tr-wa-btn">
+                    <h3>{{ __('messages.below_50') }}</h3>
+                    <p>{{ __('messages.below_50_desc') }}</p>
+                    <a href="https://whatsapp.com/channel/0029Vb35e8I2v1Ik7V9Khs3r" target="_blank" class="tr-wa-btn">
                         📱 {{ __('messages.get_help') }}
                     </a>
                 </div>
             @endif
         </div>
+{{-- Note block --}}
+<div class="tr-note-box">
+    <div class="tr-note-icon">📌</div>
+    <div class="tr-note-content">
+        <p class="tr-note-line">{{ __('messages.note_track') }}</p>
+        <p class="tr-note-line">{{ __('messages.note2_track') }}</p>
+    </div>
+</div>
 
         {{-- Actions --}}
         <div class="tr-actions">
-            <a href="{{ route('track.show', $user->id) }}" class="tr-btn tr-btn--secondary">{{ __('messages.recalculate') }}</a>
-<a href="{{ route('hub.home') }}" class="tr-btn tr-btn--primary">{{ __('messages.home_page') }}</a>
- </div>
+            <a href="{{ route('track.show', $user->id) }}"
+                class="tr-btn tr-btn--secondary">{{ __('messages.recalculate') }}</a>
+            <a href="{{ route('hub.home') }}" class="tr-btn tr-btn--primary">{{ __('messages.home_page') }}</a>
+        </div>
 
     </div>
 
     <style>
+        .tr-note-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: rgba(255, 193, 7, 0.12);
+    border: 1.5px solid rgba(255, 193, 7, 0.45);
+    border-right: 5px solid #f39c12;
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin: 20px 0;
+    animation: fadeInUp 0.6s ease-out 0.5s both;
+}
+
+.tr-note-icon {
+    font-size: 22px;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.tr-note-content {
+    flex: 1;
+}
+
+.tr-note-line {
+    font-size: 14px;
+    color: #7d5a00;
+    line-height: 1.7;
+    margin: 0;
+    font-weight: 500;
+}
+
+.tr-note-line + .tr-note-line {
+    margin-top: 6px;
+}
+
         .tr-wrapper {
             max-width: 900px;
             margin: 0 auto;

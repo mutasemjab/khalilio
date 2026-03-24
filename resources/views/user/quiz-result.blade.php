@@ -98,13 +98,7 @@
 
     <div class="qr-wa-card">
         <div class="qr-wa-pulse"></div>
-        <div class="qr-wa-content">
-            <div class="qr-wa-icon">📲</div>
-            <div class="qr-wa-text">
-               <h3>{{ __('messages.join_group') }} {{ $attempt->group }}</h3>
-               <p>{{ __('messages.join_wa_group') }}</p>
-            </div>
-        </div>
+       
        <a href="{{ $waLink }}" class="qr-wa-btn">
     📱 {{ __('messages.join_group_btn') }} {{ $attempt->group }} {{ __('messages.now_label') }}
 </a>
@@ -175,8 +169,8 @@
     {{-- Actions --}}
     <div class="qr-actions">
         <a href="{{ route('quiz.index', ['user' => session('quiz_user_id', 1)]) }}"
-           class="qr-btn qr-btn--secondary">🔄 {{ __('messages.retake_quiz') }}</a>
-        <a href="{{ route('hub') }}" class="qr-btn qr-btn--primary">🏠 {{ __('messages.home_page') }}</a>
+           class="qr-btn qr-btn--secondary"> {{ __('messages.retake_quiz') }}</a>
+        <a href="{{ route('hub') }}" class="qr-btn qr-btn--primary"> {{ __('messages.home_page') }}</a>
     </div>
 
 </div>

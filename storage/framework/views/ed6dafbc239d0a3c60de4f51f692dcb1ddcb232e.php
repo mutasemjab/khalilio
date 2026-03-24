@@ -1,4 +1,4 @@
-<?php $__env->startSection('title', 'نتيجة الامتحان - خليليو'); ?>
+<?php $__env->startSection('title', __('messages.quiz_result_title')); ?>
 
 <?php $__env->startSection('content'); ?>
 
@@ -25,15 +25,12 @@
     
     <div class="qr-header">
         <?php if($attempt->group === 'A'): ?>
-            <div class="qr-hero-icon">🏆</div>
-            <h1 class="qr-title">أداء رائع! مجتمع A</h1>
-        <?php elseif($attempt->group === 'B'): ?>
-            <div class="qr-hero-icon">⭐</div>
-            <h1 class="qr-title">جيد جداً! مجتمع B</h1>
-        <?php else: ?>
-            <div class="qr-hero-icon">📚</div>
-            <h1 class="qr-title">استمر في التعلم! مجتمع C</h1>
-        <?php endif; ?>
+    <h1 class="qr-title"><?php echo e(__('messages.group_a_title')); ?></h1>
+<?php elseif($attempt->group === 'B'): ?>
+    <h1 class="qr-title"><?php echo e(__('messages.group_b_title')); ?></h1>
+<?php else: ?>
+    <h1 class="qr-title"><?php echo e(__('messages.group_c_title')); ?></h1>
+<?php endif; ?>
         <p class="qr-student-name"><?php echo e($attempt->student_name); ?></p>
     </div>
 
@@ -56,14 +53,12 @@
             </svg>
             <div class="qr-score-inner">
                 <div class="qr-score-num"><?php echo e($attempt->score); ?></div>
-                <div class="qr-score-of">من <?php echo e($totalMarks); ?></div>
+              <div class="qr-score-of"><?php echo e(__('messages.from_marks')); ?> <?php echo e($totalMarks); ?></div>
+
             </div>
         </div>
         <div class="qr-score-info">
-            <div class="qr-group-badge">
-                المجموعة <?php echo e($attempt->group); ?>
-
-            </div>
+           <div class="qr-group-badge"><?php echo e(__('messages.group_label')); ?> <?php echo e($attempt->group); ?></div>
             <div class="qr-score-pct">
                 <?php echo e($totalMarks > 0 ? round(($attempt->score / $totalMarks) * 100) : 0); ?>%
             </div>
@@ -78,19 +73,16 @@
 
     
     <div class="qr-group-desc-card">
-        <?php if($attempt->group === 'A'): ?>
-        <div class="qr-desc-icon">🌟</div>
-        <h3>أنت في المجموعة المتقدمة!</h3>
-        <p>مستواك في الرياضيات ممتاز. ستنضم لمجموعة متميزة من الطلاب لتطوير مهاراتك أكثر وأكثر.</p>
-        <?php elseif($attempt->group === 'B'): ?>
-        <div class="qr-desc-icon">💪</div>
-        <h3>أنت في المجموعة المتوسطة!</h3>
-        <p>مستواك جيد وتحتاج لبعض التعزيز. المجموعة B ستساعدك على سد الفجوات وتحقيق التميز.</p>
-        <?php else: ?>
-        <div class="qr-desc-icon">🚀</div>
-        <h3>أنت في مجموعة التعزيز!</h3>
-        <p>لا تقلق! كل عبقري بدأ من هنا. المجموعة C مصممة لبناء الأساس القوي الذي تحتاجه.</p>
-        <?php endif; ?>
+     <?php if($attempt->group === 'A'): ?>
+    <h3><?php echo e(__('messages.group_a_desc_title')); ?></h3>
+    <p><?php echo e(__('messages.group_a_desc')); ?></p>
+<?php elseif($attempt->group === 'B'): ?>
+    <h3><?php echo e(__('messages.group_b_desc_title')); ?></h3>
+    <p><?php echo e(__('messages.group_b_desc')); ?></p>
+<?php else: ?>
+    <h3><?php echo e(__('messages.group_c_desc_title')); ?></h3>
+    <p><?php echo e(__('messages.group_c_desc')); ?></p>
+<?php endif; ?>
     </div>
 
     
@@ -103,22 +95,17 @@
 
     <div class="qr-wa-card">
         <div class="qr-wa-pulse"></div>
-        <div class="qr-wa-content">
-            <div class="qr-wa-icon">📲</div>
-            <div class="qr-wa-text">
-                <h3>انضم الآن لمجموعة <?php echo e($attempt->group); ?></h3>
-                <p>انقر على الزر للانضمام لقناة الواتساب الخاصة بمجموعتك</p>
-            </div>
-        </div>
-        <a href="<?php echo e($waLink); ?>" target="_blank" class="qr-wa-btn">
-            📱 انضم لمجموعة <?php echo e($attempt->group); ?> الآن
-        </a>
+       
+       <a href="<?php echo e($waLink); ?>" class="qr-wa-btn">
+    📱 <?php echo e(__('messages.join_group_btn')); ?> <?php echo e($attempt->group); ?> <?php echo e(__('messages.now_label')); ?>
+
+</a>
     </div>
 
     
     <?php if(count($answers) > 0): ?>
     <div class="qr-review">
-        <h3 class="qr-review-title">📋 مراجعة إجاباتك</h3>
+        <h3 class="qr-review-title"><?php echo e(__('messages.answers_review')); ?></h3>
 
         
         <div class="qr-review-summary">
@@ -130,17 +117,20 @@
             <div class="qr-summary-item qr-summary--correct">
                 <span class="qr-summary-icon">✅</span>
                 <span class="qr-summary-num"><?php echo e($correctCount); ?></span>
-                <span class="qr-summary-label">صحيحة</span>
+                <span class="qr-summary-label"><?php echo e(__('messages.correct_answers')); ?></span>
+
             </div>
             <div class="qr-summary-item qr-summary--wrong">
                 <span class="qr-summary-icon">❌</span>
                 <span class="qr-summary-num"><?php echo e($wrongCount); ?></span>
-                <span class="qr-summary-label">خاطئة</span>
+               <span class="qr-summary-label"><?php echo e(__('messages.wrong_answers')); ?></span>
+
             </div>
             <div class="qr-summary-item qr-summary--marks">
                 <span class="qr-summary-icon">⭐</span>
                 <span class="qr-summary-num"><?php echo e($earnedMarks); ?></span>
-                <span class="qr-summary-label">من <?php echo e($totalMarks); ?></span>
+               <span class="qr-summary-label"><?php echo e(__('messages.from_marks')); ?> <?php echo e($totalMarks); ?></span>
+
             </div>
         </div>
 
@@ -179,8 +169,8 @@
     
     <div class="qr-actions">
         <a href="<?php echo e(route('quiz.index', ['user' => session('quiz_user_id', 1)])); ?>"
-           class="qr-btn qr-btn--secondary">🔄 أعد الامتحان</a>
-        <a href="<?php echo e(route('hub')); ?>" class="qr-btn qr-btn--primary">🏠 الرئيسية</a>
+           class="qr-btn qr-btn--secondary">🔄 <?php echo e(__('messages.retake_quiz')); ?></a>
+        <a href="<?php echo e(route('hub')); ?>" class="qr-btn qr-btn--primary">🏠 <?php echo e(__('messages.home_page')); ?></a>
     </div>
 
 </div>

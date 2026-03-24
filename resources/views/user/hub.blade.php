@@ -88,10 +88,23 @@
             <div class="hub-cta__inner">
                 <div class="hub-cta__icon">📲</div>
                 <div class="hub-cta__text">
-                    <strong>{{ __('messages.whatsapp_join') }}</strong>
+                    <strong>{{ __('messages.join_2008') }}</strong>
                     <span>{{ __('messages.whatsapp_follow') }}</span>
                 </div>
                 <a href="https://whatsapp.com/channel/0029Vb35e8I2v1Ik7V9Khs3r" target="_blank" class="hub-cta__btn">
+                    <span>📱</span> {{ __('messages.join_now') }}
+                </a>
+            </div>
+        </div>
+       <br>
+        <div class="hub-cta">
+            <div class="hub-cta__inner">
+                <div class="hub-cta__icon">📲</div>
+                <div class="hub-cta__text">
+                    <strong>{{ __('messages.join_2010') }}</strong>
+                    <span>{{ __('messages.whatsapp_follow') }}</span>
+                </div>
+                <a href="https://whatsapp.com/channel/0029VbAgG0e2UPBEXwzi0V0A" target="_blank" class="hub-cta__btn">
                     <span>📱</span> {{ __('messages.join_now') }}
                 </a>
             </div>

@@ -5,51 +5,43 @@
 
 <?php
     $redirectTo = $redirectTo ?? session('redirect_to', 'average');
-    $contextMeta = match($redirectTo) {
-        'track' => [
-            'icon'     => '🧭',
-            'color'    => '#667eea',
-            'service'  => 'معرفة حقلك الدراسي',
-            'subtitle' => 'سجّل بياناتك أولاً لتتمكن من معرفة الحقل المناسب لك',
-            'step'     => 'الخطوة 1 من 3',
-            'next'     => 'إدخال علامات المواد',
-        ],
-        'quiz' => [
-            'icon'     => '🧮',
-            'color'    => '#f5576c',
-            'service'  => 'الامتحان التشخيصي بالرياضيات',
-            'subtitle' => 'سجّل بياناتك أولاً للبدء بالامتحان التشخيصي',
-            'step'     => 'الخطوة 1 من 2',
-            'next'     => 'بدء الامتحان',
-        ],
-        default => [  // average
-            'icon'     => '📊',
-            'color'    => '#4facfe',
-            'service'  => 'حساب معدلك الدراسي',
-            'subtitle' => 'سجّل بياناتك أولاً لحساب معدلك بدقة',
-            'step'     => 'الخطوة 1 من 3',
-            'next'     => 'إدخال العلامات',
-        ],
-    };
+   // @php block — replace hardcoded Arabic with __()
+$contextMeta = match($redirectTo) {
+    'track' => [
+        'icon'     => '🧭',
+        'color'    => '#667eea',
+        'service'  => __('messages.service_track'),
+        'subtitle' => __('messages.service_track_subtitle'),
+        'step'     => __('messages.service_track_step'),
+        'next'     => __('messages.service_track_next'),
+    ],
+    'quiz' => [
+        'icon'     => '🧮',
+        'color'    => '#f5576c',
+        'service'  => __('messages.service_quiz'),
+        'subtitle' => __('messages.service_quiz_subtitle'),
+        'step'     => __('messages.service_quiz_step'),
+        'next'     => __('messages.service_quiz_next'),
+    ],
+    default => [
+        'icon'     => '📊',
+        'color'    => '#4facfe',
+        'service'  => __('messages.service_avg'),
+        'subtitle' => __('messages.service_avg_subtitle'),
+        'step'     => __('messages.service_avg_step'),
+        'next'     => __('messages.service_avg_next'),
+    ],
+};
 ?>
 
 <div class="form-container">
 
-    
-    <div class="sf-context-banner" style="--ctx-color: <?php echo e($contextMeta['color']); ?>">
-        <span class="sf-ctx-icon"><?php echo e($contextMeta['icon']); ?></span>
-        <div class="sf-ctx-text">
-            <span class="sf-ctx-service"><?php echo e($contextMeta['service']); ?></span>
-            <span class="sf-ctx-step"><?php echo e($contextMeta['step']); ?></span>
-        </div>
-        <a href="<?php echo e(route('hub')); ?>" class="sf-ctx-back">← تغيير</a>
-    </div>
 
     
     <div class="sf-progress">
         <div class="sf-step sf-step--active">
             <div class="sf-step-circle">1</div>
-            <span>بياناتك</span>
+         <span><?php echo e(__('messages.your_data')); ?></span>
         </div>
         <div class="sf-step-line"></div>
         <div class="sf-step">
@@ -60,7 +52,8 @@
         <div class="sf-step-line"></div>
         <div class="sf-step">
             <div class="sf-step-circle">3</div>
-            <span>النتيجة</span>
+        <span><?php echo e(__('messages.result')); ?></span>
+
         </div>
         <?php endif; ?>
     </div>
@@ -73,7 +66,6 @@
         <br>
         <a href="<?php echo e(route('student.form')); ?>" class="site-title">أحمد خليليو</a>
         <h1 class="form-title"><?php echo e(__('messages.student_registration')); ?></h1>
-        <p class="form-subtitle"><?php echo e($contextMeta['subtitle']); ?></p>
     </div>
 
     <form method="POST" action="<?php echo e(route('student.store')); ?>" class="student-form" id="studentForm">
@@ -88,18 +80,20 @@
             <div class="form-group form-group-full">
                 <label for="name" class="form-label">
                     <span class="label-icon">👤</span>
-                    الاسم الكامل (ثلاثة مقاطع)
+                   <?php echo e(__('messages.full_name')); ?>
+
                 </label>
                 <input type="text"
                        id="name"
                        name="name"
                        value="<?php echo e(old('name')); ?>"
                        class="form-input <?php echo e($errors->has('name') ? 'input-error' : ''); ?>"
-                       placeholder="مثال: أحمد محمد العمري"
+                       placeholder="<?php echo e(__('messages.full_name_placeholder')); ?>"
                        required>
                 <div class="input-hint">
                     <span class="hint-icon">💡</span>
-                    يجب إدخال الاسم الأول واسم الأب واسم العائلة
+                    <?php echo e(__('messages.full_name_hint')); ?>
+
                 </div>
                 <?php $__errorArgs = ['name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -117,7 +111,8 @@ unset($__errorArgs, $__bag); ?>
             <div class="form-group">
                 <label for="phone" class="form-label">
                     <span class="label-icon">📱</span>
-                    رقم الهاتف
+                   <?php echo e(__('messages.phone')); ?>
+
                 </label>
                 <input type="text"
                        id="phone"
@@ -129,7 +124,8 @@ unset($__errorArgs, $__bag); ?>
                        required>
                 <div class="input-hint">
                     <span class="hint-icon">💡</span>
-                    يبدأ بـ 07 ويتكون من 10 أرقام
+                  <?php echo e(__('messages.phone_hint')); ?>
+
                 </div>
                 <?php $__errorArgs = ['phone'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -147,7 +143,8 @@ unset($__errorArgs, $__bag); ?>
             <div class="form-group">
                 <label class="form-label">
                     <span class="label-icon">🎂</span>
-                    الجيل / سنة الميلاد
+                   <?php echo e(__('messages.generation_label')); ?>
+
                 </label>
                 <div class="generation-picker">
                     <?php $__currentLoopData = ['2008','2009','2010']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $gen): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -207,12 +204,12 @@ unset($__errorArgs, $__bag); ?>
 
         
         <div class="form-actions">
-            <button type="submit" class="submit-btn" id="submitBtn" style="--btn-color: <?php echo e($contextMeta['color']); ?>">
-                <span class="btn-icon"><?php echo e($contextMeta['icon']); ?></span>
-                <?php echo e(__('messages.next_enter_grades')); ?>
+           <button type="submit" class="submit-btn" id="submitBtn" style="--btn-color: <?php echo e($contextMeta['color']); ?>">
+    <span class="btn-icon">🚀</span>
+    <?php echo e(__('messages.start_now')); ?>
 
-                <div class="btn-ripple"></div>
-            </button>
+    <div class="btn-ripple"></div>
+</button>
         </div>
     </form>
 </div>

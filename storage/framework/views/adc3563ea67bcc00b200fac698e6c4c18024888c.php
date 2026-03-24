@@ -5,10 +5,10 @@
 
     
     <div class="ts-header">
-        <a href="<?php echo e(route('hub')); ?>" class="ts-back">← العودة</a>
+        <a href="<?php echo e(route('hub.home')); ?>" class="ts-back"><?php echo e(__('messages.back')); ?></a>
         <div class="ts-crown">👑</div>
-        <h1 class="ts-title">جيش الفل والأوائل</h1>
-        <p class="ts-subtitle">هؤلاء هم أوائل الطلاب الذين حققوا إنجازات رائعة</p>
+      <h1 class="ts-title"><?php echo e(__('messages.top_students_title')); ?></h1>
+<p class="ts-subtitle"><?php echo e(__('messages.top_students_subtitle')); ?></p>
         <div class="ts-sparkles">
             <?php for($i=0;$i<8;$i++): ?>
             <span class="ts-sparkle" style="--x:<?php echo e(rand(5,95)); ?>%;--y:<?php echo e(rand(5,90)); ?>%;--d:<?php echo e(rand(3,7)); ?>s;--size:<?php echo e(rand(10,20)); ?>px">✦</span>
@@ -53,7 +53,7 @@
                         <?php else: ?>
                             <div class="ts-thumb-placeholder">📋</div>
                         <?php endif; ?>
-                        <div class="ts-thumb-label">كشف العلامات</div>
+                       <div class="ts-thumb-label"><?php echo e(__('messages.grades_sheet')); ?></div>
                     </div>
                     <div class="ts-thumb" onclick="openPhotoModal('<?php echo e($student->certificate_photo ? asset('assets/admin/uploads/'.$student->certificate_photo) : ''); ?>', 'الشهادة')">
                         <?php if($student->certificate_photo): ?>
@@ -61,7 +61,8 @@
                         <?php else: ?>
                             <div class="ts-thumb-placeholder">🏅</div>
                         <?php endif; ?>
-                        <div class="ts-thumb-label">الشهادة</div>
+                        <div class="ts-thumb-label"><?php echo e(__('messages.certificate')); ?></div>
+
                     </div>
                 </div>
             </div>
@@ -74,7 +75,8 @@
                 <?php endif; ?>
                 <?php if($student->average): ?>
                 <div class="ts-avg">
-                    <span class="ts-avg-label">المعدل</span>
+                  <span class="ts-avg-label"><?php echo e(__('messages.average_label')); ?></span>
+
                     <span class="ts-avg-val"><?php echo e($student->average); ?>%</span>
                 </div>
                 <?php endif; ?>
@@ -93,10 +95,12 @@
     
     <div class="ts-cta">
         <div class="ts-cta-emoji">🌟</div>
-        <h2 class="ts-cta-title">حابب تكون من ضمنهم؟</h2>
-        <p class="ts-cta-text">تفضل انضم لقناة الواتساب حتى تكون من جيش الفل والأوائل</p>
+       <h2 class="ts-cta-title"><?php echo e(__('messages.want_to_join')); ?></h2>
+      <p class="ts-cta-text"><?php echo e(__('messages.join_whatsapp_cta')); ?></p>
+
         <a href="https://whatsapp.com/channel/0029Vb35e8I2v1Ik7V9Khs3r" target="_blank" class="ts-cta-btn">
-            <span>📱</span> انضم لجيش الفل الآن
+            <span>📱</span>  <?php echo e(__('messages.join_army')); ?>
+
         </a>
     </div>
 
@@ -104,9 +108,9 @@
     
     <div class="ts-empty">
         <div class="ts-empty-icon">🏆</div>
-        <h3>قريباً سيتم إضافة الأوائل</h3>
-        <p>ترقب قائمة الأوائل قريباً</p>
-        <a href="<?php echo e(route('hub')); ?>" class="ts-back-btn">← العودة للرئيسية</a>
+        <h3><?php echo e(__('messages.top_coming_soon')); ?></h3>
+        <p><?php echo e(__('messages.top_coming_soon_desc')); ?></p>
+        <a href="<?php echo e(route('hub.home')); ?>" class="ts-back-btn">← <?php echo e(__('messages.back_to_home')); ?></a>
     </div>
     <?php endif; ?>
 

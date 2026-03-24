@@ -72,7 +72,6 @@ $contextMeta = match($redirectTo) {
         <br>
         <a href="{{ route('student.form') }}" class="site-title">أحمد خليليو</a>
         <h1 class="form-title">{{ __('messages.student_registration') }}</h1>
-        <p class="form-subtitle">{{ $contextMeta['subtitle'] }}</p>
     </div>
 
     <form method="POST" action="{{ route('student.store') }}" class="student-form" id="studentForm">

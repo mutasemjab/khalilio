@@ -170,8 +170,7 @@
     <div class="action-section">
         <div class="action-buttons">
             <a href="{{ route('student.form') }}" class="action-btn primary">
-                <span class="btn-icon">➕</span>
-                {{ __('messages.add_new_student') }}
+                {{ __('messages.Home') }}
             </a>
           
         </div>
