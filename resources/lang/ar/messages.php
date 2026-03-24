@@ -281,7 +281,7 @@ return [
     // ── Common ───────────────────────────────────────────────
     'logo'                      => 'الشعار',
     'breaking_news'             => 'عاجل',
-    'math_course_announcement'  => 'سجل الآن في كورس الرياضيات مع أحمد خليليو 🎯',
+    'math_course_announcement'  =>  ' سجل الآن في كورس الرياضيات مع أحمد خليليو بشكل مجاني🎯',
     'student_system'            => 'نظام خليليو',
     'all_rights_reserved'       => 'جميع الحقوق محفوظة © خليليو',
     'developed_with_love'       => 'صُنع بـ',
