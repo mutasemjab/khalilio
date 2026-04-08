@@ -14,7 +14,7 @@ class PdfBagAdminController extends Controller
 
     public function __construct()
     {
-        $this->dir = public_path('assets_front/pdfs');
+        $this->dir = base_path('assets_front/pdfs');
     }
 
     public function index()

@@ -9,7 +9,7 @@ class PdfBagController extends Controller
 {
     public function index()
     {
-        $dir   = public_path('assets_front/pdfs');
+        $dir   = base_path('assets_front/pdfs');
         $files = [];
 
         if (File::isDirectory($dir)) {
