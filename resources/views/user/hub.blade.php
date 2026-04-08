@@ -81,6 +81,20 @@
                 <div class="hub-card__shine"></div>
             </a>
 
+            {{-- Card 5: الحقيبة الإلكترونية --}}
+            <a href="{{ route('pdf-bag.index') }}" class="hub-card hub-card--bag hub-card--wide">
+                <div class="hub-card__glow"></div>
+                <div class="hub-card__number">05</div>
+                <div class="hub-card__icon-wrap">
+                    <span class="hub-card__icon">💼</span>
+                    <div class="hub-card__ring"></div>
+                </div>
+                <h2 class="hub-card__title">{{ __('messages.card_bag_title') }}</h2>
+                <p class="hub-card__desc">{{ __('messages.card_bag_desc') }}</p>
+                <div class="hub-card__arrow">←</div>
+                <div class="hub-card__shine"></div>
+            </a>
+
         </div>
 
         {{-- WhatsApp CTA --}}
@@ -235,6 +249,11 @@
             margin-bottom: 40px;
         }
 
+        /* 5th card spans full width */
+        .hub-card--wide {
+            grid-column: 1 / -1;
+        }
+
         /* ── Base Card ───────────────────────────────── */
         .hub-card {
             position: relative;
@@ -265,6 +284,10 @@
 
         .hub-card:nth-child(4) {
             animation-delay: 0.4s;
+        }
+
+        .hub-card:nth-child(5) {
+            animation-delay: 0.5s;
         }
 
         @keyframes cardIn {
@@ -508,6 +531,41 @@
             background: rgba(0, 0, 0, 0.22);
         }
 
+        .hub-card--bag {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            box-shadow: 0 20px 50px rgba(17, 153, 142, 0.35);
+        }
+
+        .hub-card--bag .hub-card__glow {
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 65%);
+        }
+
+        .hub-card--bag:hover {
+            box-shadow: 0 30px 70px rgba(17, 153, 142, 0.5);
+            color: white;
+        }
+
+        /* Wide card inner layout — horizontal on large screens */
+        .hub-card--wide {
+            flex-direction: row;
+            align-items: center;
+            padding: 32px 36px;
+            gap: 24px;
+        }
+
+        .hub-card--wide .hub-card__icon-wrap {
+            flex-shrink: 0;
+        }
+
+        .hub-card--wide .hub-card__title {
+            font-size: 24px;
+        }
+
+        .hub-card--wide .hub-card__arrow {
+            margin-top: 0;
+            align-self: center;
+        }
+
         /* ── WhatsApp CTA ─────────────────────────────── */
         .hub-cta {
             background: linear-gradient(135deg, #25D366, #128C7E);
@@ -586,6 +644,14 @@
 
             .hub-card__title {
                 font-size: 20px;
+            }
+
+            /* On mobile the wide card behaves like a normal card */
+            .hub-card--wide {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 28px 22px 22px;
+                gap: 14px;
             }
 
             .hub-cta__inner {

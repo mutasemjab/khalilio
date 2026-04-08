@@ -49,7 +49,7 @@
                     </div>
                     <div class="qz-stat">
                         <span class="qz-stat-icon">🎯</span>
-                        <span class="qz-stat-val">30</span>
+                        <span class="qz-stat-val">{{ $quiz->total_marks }}</span>
                         <span class="qz-stat-label">{{ __('messages.grades') }}</span>
                     </div>
                 </div>

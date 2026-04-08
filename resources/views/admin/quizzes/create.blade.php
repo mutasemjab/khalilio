@@ -80,7 +80,7 @@
                                     </label>
                                     <div class="input-group">
                                         <input type="number" name="total_marks"
-                                               value="{{ old('total_marks', 30) }}"
+                                               value="{{ old('total_marks', config('quiz.default_total_marks')) }}"
                                                class="form-control qz-input @error('total_marks') is-invalid @enderror"
                                                min="1" required
                                                id="totalMarksInput">

@@ -16,7 +16,7 @@
     if (!is_array($answers)) {
         $answers = [];
     }
-    $totalMarks = $attempt->total_marks ?? $attempt->total_questions ?? 30;
+    $totalMarks = $attempt->total_marks ?? $attempt->total_questions ?? config('quiz.default_total_marks', 50);
 @endphp
 
 <div class="qr-wrapper">

@@ -5,6 +5,7 @@ use App\Http\Controllers\HubController;
 use App\Http\Controllers\TrackController;
 use App\Http\Controllers\TopStudentController;
 use App\Http\Controllers\QuizController;
+use App\Http\Controllers\PdfBagController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -48,5 +49,8 @@ Route::group([
     Route::get('/quiz/{user}',           [QuizController::class, 'index'])->name('quiz.index');
     Route::post('/quiz/{quiz}/start',    [QuizController::class, 'start'])->name('quiz.start');
     Route::post('/quiz/{quiz}/submit',   [QuizController::class, 'submit'])->name('quiz.submit');
+
+    // ── PDF Bag ───────────────────────────────────────────────
+    Route::get('/pdf-bag', [PdfBagController::class, 'index'])->name('pdf-bag.index');
 
 });

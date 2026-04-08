@@ -112,6 +112,15 @@
                     </ul>
                 </li>
 
+                {{-- ── PDF Bag ──────────────────────────── --}}
+                <li class="nav-item {{ request()->routeIs('admin.pdf-bag.*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.pdf-bag.index') }}"
+                       class="nav-link {{ request()->routeIs('admin.pdf-bag.*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-briefcase" style="color:#38ef7d"></i>
+                        <p>{{ app()->getLocale() == 'ar' ? 'الحقيبة الإلكترونية' : 'Digital Bag' }}</p>
+                    </a>
+                </li>
+
                 {{-- ── SEPARATOR ─────────────────────────── --}}
                 <li class="nav-header"
                     style="font-size:10px;letter-spacing:1px;opacity:.6;padding:10px 16px 4px">
@@ -139,6 +148,13 @@
                     <a href="{{ route('quiz.landing') }}" target="_blank" class="nav-link">
                         <i class="nav-icon fas fa-pen-alt" style="color:#f093fb"></i>
                         <p>{{ app()->getLocale() == 'ar' ? 'صفحة الامتحان' : 'Quiz Page' }}</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('pdf-bag.index') }}" target="_blank" class="nav-link">
+                        <i class="nav-icon fas fa-file-pdf" style="color:#38ef7d"></i>
+                        <p>{{ app()->getLocale() == 'ar' ? 'الحقيبة الإلكترونية' : 'Digital Bag' }}</p>
                     </a>
                 </li>
 

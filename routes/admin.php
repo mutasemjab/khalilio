@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\UserController;
 // ── NEW IMPORTS ──────────────────────────────────────────────
 use App\Http\Controllers\Admin\TopStudentAdminController;
 use App\Http\Controllers\Admin\QuizAdminController;
+use App\Http\Controllers\Admin\PdfBagAdminController;
 // ────────────────────────────────────────────────────────────
 
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -73,6 +74,13 @@ Route::group([
             Route::get('/{quiz}/questions',  [QuizAdminController::class, 'questions'])->name('questions');
             Route::post('/{quiz}/questions', [QuizAdminController::class, 'storeQuestion'])->name('questions.store');
             Route::delete('/questions/{question}', [QuizAdminController::class, 'destroyQuestion'])->name('questions.destroy');
+        });
+
+        // ── PDF Bag ───────────────────────────────────────────
+        Route::prefix('pdf-bag')->name('admin.pdf-bag.')->group(function () {
+            Route::get('/',                    [PdfBagAdminController::class, 'index'])->name('index');
+            Route::post('/',                   [PdfBagAdminController::class, 'store'])->name('store');
+            Route::delete('/{filename}',       [PdfBagAdminController::class, 'destroy'])->name('destroy');
         });
 
     });

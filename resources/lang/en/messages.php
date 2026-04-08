@@ -295,6 +295,8 @@ return [
     'card_avg_desc'       => 'Enter your grades in the four subjects for the class of 2008 and calculate your average accurately',
     'card_top_title'      => 'Top Students',
     'card_top_desc'       => 'Meet the top students, their achievements and certificates, and join the winners\' army',
+    'card_bag_title'      => 'Digital Bag',
+    'card_bag_desc'       => 'Your digital library — download Mr. Ahmad Khalil\'s PDF files for free',
     'whatsapp_join'       => 'Join the WhatsApp Channel Now',
     'whatsapp_follow'     => 'And follow all updates and your study plan around the clock',
     'join_now'            => 'Join Now',
