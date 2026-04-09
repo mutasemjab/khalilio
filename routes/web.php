@@ -6,6 +6,7 @@ use App\Http\Controllers\TrackController;
 use App\Http\Controllers\TopStudentController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\PdfBagController;
+use App\Http\Controllers\UserLoginController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -25,7 +26,12 @@ Route::group([
 
     // ── Hub ──────────────────────────────────────────────────
     Route::get('/',      [StudentController::class, 'showStudentForm'])->name('hub');
-    Route::get('/home',  [HubController::class, 'index'])->name('hub.home'); // ✅ أضف هذا
+    Route::get('/home',  [HubController::class, 'index'])->name('hub.home');
+
+    // ── Login ─────────────────────────────────────────────────
+    Route::get('/login',  [UserLoginController::class, 'showLogin'])->name('user.login');
+    Route::post('/login', [UserLoginController::class, 'login'])->name('user.login.post');
+    Route::get('/logout', [UserLoginController::class, 'logout'])->name('user.logout');
 
     // ── Registration ─────────────────────────────────────────
     Route::get('/register',  [StudentController::class, 'showStudentForm'])->name('student.form');
@@ -51,6 +57,7 @@ Route::group([
     Route::post('/quiz/{quiz}/submit',   [QuizController::class, 'submit'])->name('quiz.submit');
 
     // ── PDF Bag ───────────────────────────────────────────────
-    Route::get('/pdf-bag', [PdfBagController::class, 'index'])->name('pdf-bag.index');
+    Route::get('/pdf-bag',                      [PdfBagController::class, 'index'])->name('pdf-bag.index');
+    Route::get('/pdf-bag/{category}',           [PdfBagController::class, 'category'])->name('pdf-bag.category');
 
 });

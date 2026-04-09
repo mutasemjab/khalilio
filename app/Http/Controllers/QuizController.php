@@ -67,11 +67,12 @@ class QuizController extends Controller
         }
 
         $totalMarks = $quiz->total_marks;
-        $pct        = $totalMarks > 0 ? ($score / $totalMarks) * 100 : 0;
 
+        // Classification based on direct score:
+        // > 42 → A | 30–42 → B | < 30 → C
         $group = 'C';
-        if ($pct >= 83)     $group = 'A';
-        elseif ($pct >= 60) $group = 'B';
+        if ($score > 42)                       $group = 'A';
+        elseif ($score >= 30 && $score <= 42)  $group = 'B';
 
         $userId = session('quiz_user_id');
         $user   = $userId ? User::find($userId) : null;

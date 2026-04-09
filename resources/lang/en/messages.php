@@ -468,4 +468,16 @@ return [
     "" => "",
     "" => "",
 
+    // Login
+    'login_title'        => 'Login',
+    'login_subtitle'     => 'Enter your phone number to access your account',
+    'phone_label'        => 'Phone Number',
+    'phone_placeholder'  => 'e.g. 0796691306',
+    'login_btn'          => 'Login',
+    'no_account'         => "Don't have an account?",
+    'register_link'      => 'Register Now',
+    'phone_required'     => 'Phone number is required',
+    'phone_not_found'    => 'Phone number not registered, please register first',
+    'logout_btn'         => 'Logout',
+
 ];

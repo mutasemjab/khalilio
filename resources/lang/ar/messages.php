@@ -480,5 +480,16 @@ return [
     "" => "",
     "" => "",
 
+    // Login
+    'login_title'        => 'تسجيل الدخول',
+    'login_subtitle'     => 'أدخل رقم هاتفك للدخول إلى حسابك',
+    'phone_label'        => 'رقم الهاتف',
+    'phone_placeholder'  => 'مثال: 0796691306',
+    'login_btn'          => 'دخول',
+    'no_account'         => 'ليس لديك حساب؟',
+    'register_link'      => 'سجّل الآن',
+    'phone_required'     => 'رقم الهاتف مطلوب',
+    'phone_not_found'    => 'رقم الهاتف غير مسجّل، يرجى التسجيل أولاً',
+    'logout_btn'         => 'تسجيل الخروج',
 
 ];

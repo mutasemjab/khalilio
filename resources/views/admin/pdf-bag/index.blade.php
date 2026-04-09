@@ -1,29 +1,24 @@
 {{-- resources/views/admin/pdf-bag/index.blade.php --}}
 @extends('layouts.admin')
 
-@section('title', app()->getLocale() === 'ar' ? 'الحقيبة الإلكترونية' : 'Digital Bag')
+@section('title', 'الحقيبة الإلكترونية - التصنيفات')
 
 @section('content')
 <div class="container-fluid">
 
-    {{-- Page Header --}}
     <div class="d-flex align-items-center justify-content-between mb-4">
         <div>
             <h4 class="mb-1 font-weight-bold">
                 <span style="font-size:24px">💼</span>
-                {{ app()->getLocale() === 'ar' ? 'الحقيبة الإلكترونية' : 'Digital Bag' }}
+                الحقيبة الإلكترونية — التصنيفات
             </h4>
-            <p class="text-muted mb-0 small">
-                {{ app()->getLocale() === 'ar' ? 'إدارة ملفات PDF المرفوعة' : 'Manage uploaded PDF files' }}
-            </p>
+            <p class="text-muted mb-0 small">أنشئ تصنيفات وأضف الملفات داخلها</p>
         </div>
         <a href="{{ route('pdf-bag.index') }}" target="_blank" class="btn btn-outline-success btn-sm px-3">
-            <i class="fas fa-external-link-alt mr-1"></i>
-            {{ app()->getLocale() === 'ar' ? 'عرض الصفحة' : 'View Page' }}
+            <i class="fas fa-external-link-alt mr-1"></i> عرض الصفحة
         </a>
     </div>
 
-    {{-- Alerts --}}
     @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show">
             <i class="fas fa-check-circle mr-1"></i> {{ session('success') }}
@@ -31,39 +26,34 @@
         </div>
     @endif
 
-    {{-- Upload Card --}}
+    {{-- Add Category --}}
     <div class="card shadow-sm mb-4">
         <div class="card-header" style="background: linear-gradient(135deg,#11998e,#38ef7d); color:white;">
-            <h6 class="mb-0 font-weight-bold">
-                <i class="fas fa-upload mr-2"></i>
-                {{ app()->getLocale() === 'ar' ? 'رفع ملف PDF جديد' : 'Upload New PDF' }}
-            </h6>
+            <h6 class="mb-0 font-weight-bold"><i class="fas fa-plus mr-2"></i> إضافة تصنيف جديد</h6>
         </div>
         <div class="card-body">
-            <form action="{{ route('admin.pdf-bag.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.pdf-bag.categories.store') }}" method="POST">
                 @csrf
                 <div class="row align-items-end">
-                    <div class="col-md-5 form-group mb-md-0">
-                        <label class="font-weight-bold small">
-                            {{ app()->getLocale() === 'ar' ? 'اسم الملف (اختياري)' : 'File Title (optional)' }}
-                        </label>
-                        <input type="text" name="pdf_title" class="form-control @error('pdf_title') is-invalid @enderror"
-                               placeholder="{{ app()->getLocale() === 'ar' ? 'مثال: ورقة عمل الوحدة الأولى' : 'e.g. Unit 1 Worksheet' }}">
-                        @error('pdf_title')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    <div class="col-md-4 form-group mb-md-0">
+                        <label class="font-weight-bold small">الاسم بالعربي *</label>
+                        <input type="text" name="name_ar" class="form-control" placeholder="مثال: امتحانات سابقة" required>
                     </div>
-                    <div class="col-md-5 form-group mb-md-0">
-                        <label class="font-weight-bold small">
-                            {{ app()->getLocale() === 'ar' ? 'اختر ملف PDF *' : 'Choose PDF file *' }}
-                        </label>
-                        <input type="file" name="pdf_file" accept=".pdf"
-                               class="form-control-file @error('pdf_file') is-invalid @enderror" required>
-                        @error('pdf_file')<div class="text-danger small mt-1">{{ $message }}</div>@enderror
-                        <small class="text-muted">{{ app()->getLocale() === 'ar' ? 'الحد الأقصى: 20 MB' : 'Max: 20 MB' }}</small>
+                    <div class="col-md-3 form-group mb-md-0">
+                        <label class="font-weight-bold small">الاسم بالإنجليزي</label>
+                        <input type="text" name="name_en" class="form-control" placeholder="e.g. Past Exams">
+                    </div>
+                    <div class="col-md-2 form-group mb-md-0">
+                        <label class="font-weight-bold small">الأيقونة (emoji)</label>
+                        <input type="text" name="icon" class="form-control text-center" placeholder="📚" maxlength="5" value="📁">
+                    </div>
+                    <div class="col-md-1 form-group mb-md-0">
+                        <label class="font-weight-bold small">الترتيب</label>
+                        <input type="number" name="sort_order" class="form-control" value="0" min="0">
                     </div>
                     <div class="col-md-2">
                         <button type="submit" class="btn btn-success btn-block">
-                            <i class="fas fa-upload mr-1"></i>
-                            {{ app()->getLocale() === 'ar' ? 'رفع' : 'Upload' }}
+                            <i class="fas fa-plus mr-1"></i> إضافة
                         </button>
                     </div>
                 </div>
@@ -71,54 +61,57 @@
         </div>
     </div>
 
-    {{-- Files Table --}}
+    {{-- Categories list --}}
     <div class="card shadow-sm">
         <div class="card-header bg-white d-flex align-items-center justify-content-between">
             <h6 class="mb-0 font-weight-bold">
-                <i class="fas fa-file-pdf text-danger mr-2"></i>
-                {{ app()->getLocale() === 'ar' ? 'الملفات المرفوعة' : 'Uploaded Files' }}
-                <span class="badge badge-secondary ml-2">{{ count($files) }}</span>
+                <i class="fas fa-folder text-warning mr-2"></i>
+                التصنيفات الموجودة
+                <span class="badge badge-secondary ml-2">{{ $categories->count() }}</span>
             </h6>
         </div>
         <div class="card-body p-0">
-            @if(count($files) > 0)
+            @if($categories->count() > 0)
                 <div class="table-responsive">
                     <table class="table table-hover mb-0">
                         <thead class="thead-light">
                             <tr>
                                 <th>#</th>
-                                <th>{{ app()->getLocale() === 'ar' ? 'اسم الملف' : 'File Name' }}</th>
-                                <th>{{ app()->getLocale() === 'ar' ? 'الحجم' : 'Size' }}</th>
-                                <th>{{ app()->getLocale() === 'ar' ? 'تاريخ الرفع' : 'Upload Date' }}</th>
-                                <th>{{ app()->getLocale() === 'ar' ? 'إجراءات' : 'Actions' }}</th>
+                                <th>الأيقونة</th>
+                                <th>الاسم</th>
+                                <th>عدد الملفات</th>
+                                <th>الترتيب</th>
+                                <th>إجراءات</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($files as $i => $file)
-                                <tr>
-                                    <td class="text-muted">{{ $i + 1 }}</td>
-                                    <td>
-                                        <span style="font-size:18px">📄</span>
-                                        <strong class="mr-2">{{ $file['name'] }}</strong>
-                                    </td>
-                                    <td><span class="badge badge-light">{{ $file['size'] }}</span></td>
-                                    <td class="text-muted small">{{ $file['date'] }}</td>
-                                    <td>
-                                        <a href="{{ $file['url'] }}" target="_blank"
-                                           class="btn btn-sm btn-outline-primary mr-1">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
-                                        <form action="{{ route('admin.pdf-bag.destroy', $file['filename']) }}"
-                                              method="POST" class="d-inline"
-                                              onsubmit="return confirm('{{ app()->getLocale() === 'ar' ? 'هل أنت متأكد من الحذف؟' : 'Delete this file?' }}')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-outline-danger">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
+                            @foreach($categories as $i => $cat)
+                            <tr>
+                                <td class="text-muted">{{ $i + 1 }}</td>
+                                <td style="font-size:24px">{{ $cat->icon }}</td>
+                                <td>
+                                    <strong>{{ $cat->name_ar }}</strong>
+                                    @if($cat->name_en)
+                                        <small class="text-muted d-block">{{ $cat->name_en }}</small>
+                                    @endif
+                                </td>
+                                <td><span class="badge badge-info">{{ $cat->files_count }} ملف</span></td>
+                                <td class="text-muted">{{ $cat->sort_order }}</td>
+                                <td>
+                                    <a href="{{ route('admin.pdf-bag.categories.show', $cat->id) }}"
+                                       class="btn btn-sm btn-outline-primary mr-1">
+                                        <i class="fas fa-folder-open"></i> إدارة الملفات
+                                    </a>
+                                    <form action="{{ route('admin.pdf-bag.categories.destroy', $cat->id) }}"
+                                          method="POST" class="d-inline"
+                                          onsubmit="return confirm('حذف التصنيف وجميع ملفاته؟')">
+                                        @csrf @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
                             @endforeach
                         </tbody>
                     </table>
@@ -126,7 +119,7 @@
             @else
                 <div class="text-center py-5 text-muted">
                     <div style="font-size:48px">📂</div>
-                    <p class="mt-3">{{ app()->getLocale() === 'ar' ? 'لا توجد ملفات مرفوعة بعد.' : 'No files uploaded yet.' }}</p>
+                    <p class="mt-3">لا توجد تصنيفات بعد. أضف أول تصنيف من الأعلى.</p>
                 </div>
             @endif
         </div>

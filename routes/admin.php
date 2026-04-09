@@ -78,9 +78,14 @@ Route::group([
 
         // ── PDF Bag ───────────────────────────────────────────
         Route::prefix('pdf-bag')->name('admin.pdf-bag.')->group(function () {
-            Route::get('/',                    [PdfBagAdminController::class, 'index'])->name('index');
-            Route::post('/',                   [PdfBagAdminController::class, 'store'])->name('store');
-            Route::delete('/{filename}',       [PdfBagAdminController::class, 'destroy'])->name('destroy');
+            // Categories
+            Route::get('/',                              [PdfBagAdminController::class, 'index'])->name('index');
+            Route::post('/categories',                   [PdfBagAdminController::class, 'storeCategory'])->name('categories.store');
+            Route::delete('/categories/{category}',      [PdfBagAdminController::class, 'destroyCategory'])->name('categories.destroy');
+            // Files within a category
+            Route::get('/categories/{category}',         [PdfBagAdminController::class, 'showCategory'])->name('categories.show');
+            Route::post('/categories/{category}/files',  [PdfBagAdminController::class, 'storeFile'])->name('files.store');
+            Route::delete('/files/{file}',               [PdfBagAdminController::class, 'destroyFile'])->name('files.destroy');
         });
 
     });
