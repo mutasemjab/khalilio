@@ -476,6 +476,7 @@ return [
     'login_btn'          => 'Login',
     'no_account'         => "Don't have an account?",
     'register_link'      => 'Register Now',
+    'have_account'       => 'Already have an account?',
     'phone_required'     => 'Phone number is required',
     'phone_not_found'    => 'Phone number not registered, please register first',
     'logout_btn'         => 'Logout',

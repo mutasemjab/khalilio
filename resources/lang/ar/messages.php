@@ -488,6 +488,7 @@ return [
     'login_btn'          => 'دخول',
     'no_account'         => 'ليس لديك حساب؟',
     'register_link'      => 'سجّل الآن',
+    'have_account'       => 'عندك حساب؟',
     'phone_required'     => 'رقم الهاتف مطلوب',
     'phone_not_found'    => 'رقم الهاتف غير مسجّل، يرجى التسجيل أولاً',
     'logout_btn'         => 'تسجيل الخروج',

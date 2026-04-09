@@ -180,6 +180,10 @@ $contextMeta = match($redirectTo) {
     {{ __('messages.start_now') }}
     <div class="btn-ripple"></div>
 </button>
+            <div class="sf-login-link">
+                {{ __('messages.have_account') }}
+                <a href="{{ route('user.login') }}">{{ __('messages.login_btn') }}</a>
+            </div>
         </div>
     </form>
 </div>
@@ -255,6 +259,11 @@ $contextMeta = match($redirectTo) {
 .btn-icon { font-size: 20px; }
 .btn-ripple { position: absolute; top:0; left:-100%; width:100%; height:100%; background: linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent); transition: left 0.6s ease; }
 .submit-btn:hover .btn-ripple { left:100%; }
+
+/* Login link */
+.sf-login-link { margin-top: 16px; font-size: 14px; color: #888; }
+.sf-login-link a { color: var(--primary-color); font-weight: 700; text-decoration: none; }
+.sf-login-link a:hover { text-decoration: underline; }
 
 @keyframes fadeInDown { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 @keyframes slideInUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
