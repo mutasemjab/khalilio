@@ -7,7 +7,7 @@
     <div class="pb-wrapper">
 
         <div class="pb-header">
-            <a href="{{ route('hub.home') }}" class="ts-back">{{ __('messages.back') }}</a>
+            <a href="{{ route('hub.home') }}" class="pb-back">{{ __('messages.back') }}</a>
             <div class="pb-icon">💼</div>
             <h1 class="pb-title">{{ __('messages.card_bag_title') }}</h1>
             <p class="pb-subtitle">{{ __('messages.card_bag_desc') }}</p>
@@ -49,6 +49,26 @@
         .pb-wrapper { max-width: 800px; margin: 0 auto; padding-bottom: 60px; }
 
         .pb-header { text-align: center; margin-bottom: 32px; animation: pbFadeDown 0.7s ease-out; position: relative; }
+
+        .pb-back {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #11998e;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 7px 14px;
+            border-radius: 20px;
+            background: rgba(17, 153, 142, 0.1);
+            transition: all 0.2s ease;
+            z-index: 2;
+        }
+        .pb-back:hover { background: rgba(17,153,142,0.2); color: #11998e; text-decoration: none; }
+        html[dir="rtl"] .pb-back { right: auto; left: 0; }
 
         .pb-icon { font-size: 60px; display: block; margin-bottom: 12px; animation: pbFloat 3s ease-in-out infinite; }
 
