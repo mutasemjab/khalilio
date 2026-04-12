@@ -9,7 +9,7 @@ return [
 'math_course_announcement' => 'Professor Ahmed Khalil (Khalilio) announces advanced mathematics, business mathematics, financial culture courses - detailed explanation on YouTube for free • Plus preparatory course (foundation) • Weekly electronic exams • Electronic question bank • To join, contact us on WhatsApp: 0796691306 / 0799635444',
     'logo' => 'Logo',
     'all_rights_reserved' => 'All Rights Reserved',
-    'developed_with_love' => 'Developed with Love',
+    'developed_with_love' => 'Developed By Mutasem Jaber',
 
     // Student Registration
     'student_registration' => 'Student Registration',
@@ -283,7 +283,6 @@ return [
     'math_course_announcement'  => 'Register now in the Math course with Ahmad Khaleelio 🎯',
     'student_system'            => 'Khaleelio System',
     'all_rights_reserved'       => 'All rights reserved © Khaleelio',
-    'developed_with_love'       => 'Made with',
      // Hub
     'hub_title'           => 'Welcome to Khaleelio',
     'hub_subtitle'        => 'Choose what you want to know today',
