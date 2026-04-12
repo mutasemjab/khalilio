@@ -11,6 +11,7 @@ return new class extends Migration
         Schema::create('pdf_files', function (Blueprint $table) {
             $table->id();
             $table->foreignId('pdf_category_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('pdf_subcategory_id')->nullable()->constrained()->cascadeOnDelete();
             $table->string('title');
             $table->string('filename');
             $table->unsignedSmallInteger('sort_order')->default(0);

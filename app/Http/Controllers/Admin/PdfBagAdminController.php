@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\PdfCategory;
 use App\Models\PdfFile;
+use App\Models\PdfSubcategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
@@ -22,7 +23,9 @@ class PdfBagAdminController extends Controller
 
     public function index()
     {
-        $categories = PdfCategory::orderBy('sort_order')->orderBy('id')->withCount('files')->get();
+        $categories = PdfCategory::orderBy('sort_order')->orderBy('id')
+            ->withCount('subcategories')
+            ->get();
         return view('admin.pdf-bag.index', compact('categories'));
     }
 
@@ -47,26 +50,63 @@ class PdfBagAdminController extends Controller
 
     public function destroyCategory(PdfCategory $category)
     {
-        // Delete physical files
-        foreach ($category->files as $file) {
-            $path = $this->dir . DIRECTORY_SEPARATOR . $file->filename;
-            if (File::exists($path)) File::delete($path);
+        foreach ($category->subcategories as $sub) {
+            foreach ($sub->files as $file) {
+                $path = $this->dir . DIRECTORY_SEPARATOR . $file->filename;
+                if (File::exists($path)) File::delete($path);
+            }
         }
-
-        $category->delete(); // cascades to pdf_files
-
-        return back()->with('success', 'تم حذف التصنيف وملفاته.');
+        $category->delete();
+        return back()->with('success', 'تم حذف التصنيف وكل محتوياته.');
     }
 
-    // ── Files ────────────────────────────────────────────────
+    // ── Subcategories ─────────────────────────────────────────
 
     public function showCategory(PdfCategory $category)
     {
-        $files = $category->files()->get();
-        return view('admin.pdf-bag.category', compact('category', 'files'));
+        $subcategories = $category->subcategories()->withCount('files')->get();
+        return view('admin.pdf-bag.category', compact('category', 'subcategories'));
     }
 
-    public function storeFile(Request $request, PdfCategory $category)
+    public function storeSubcategory(Request $request, PdfCategory $category)
+    {
+        $request->validate([
+            'name_ar'    => 'required|string|max:200',
+            'name_en'    => 'nullable|string|max:200',
+            'icon'       => 'nullable|string|max:10',
+            'sort_order' => 'nullable|integer|min:0',
+        ]);
+
+        PdfSubcategory::create([
+            'pdf_category_id' => $category->id,
+            'name_ar'         => $request->name_ar,
+            'name_en'         => $request->name_en,
+            'icon'            => $request->icon ?: '📁',
+            'sort_order'      => $request->sort_order ?? 0,
+        ]);
+
+        return back()->with('success', 'تم إضافة التصنيف الفرعي بنجاح.');
+    }
+
+    public function destroySubcategory(PdfSubcategory $subcategory)
+    {
+        foreach ($subcategory->files as $file) {
+            $path = $this->dir . DIRECTORY_SEPARATOR . $file->filename;
+            if (File::exists($path)) File::delete($path);
+        }
+        $subcategory->delete();
+        return back()->with('success', 'تم حذف التصنيف الفرعي وملفاته.');
+    }
+
+    // ── Files ─────────────────────────────────────────────────
+
+    public function showSubcategory(PdfSubcategory $subcategory)
+    {
+        $files = $subcategory->files()->orderBy('sort_order')->get();
+        return view('admin.pdf-bag.subcategory', compact('subcategory', 'files'));
+    }
+
+    public function storeFile(Request $request, PdfSubcategory $subcategory)
     {
         $request->validate([
             'pdf_file'   => 'required|mimes:pdf|max:20480',
@@ -75,9 +115,7 @@ class PdfBagAdminController extends Controller
         ]);
 
         $title    = $request->pdf_title
-            ? $request->pdf_title
-            : pathinfo($request->file('pdf_file')->getClientOriginalName(), PATHINFO_FILENAME);
-
+            ?: pathinfo($request->file('pdf_file')->getClientOriginalName(), PATHINFO_FILENAME);
         $slug     = Str::slug($title, '_');
         $filename = time() . '_' . $slug . '.pdf';
 
@@ -88,10 +126,10 @@ class PdfBagAdminController extends Controller
         $request->file('pdf_file')->move($this->dir, $filename);
 
         PdfFile::create([
-            'pdf_category_id' => $category->id,
-            'title'           => $title,
-            'filename'        => $filename,
-            'sort_order'      => $request->sort_order ?? 0,
+            'pdf_subcategory_id' => $subcategory->id,
+            'title'              => $title,
+            'filename'           => $filename,
+            'sort_order'         => $request->sort_order ?? 0,
         ]);
 
         return back()->with('success', 'تم رفع الملف بنجاح.');
@@ -102,7 +140,6 @@ class PdfBagAdminController extends Controller
         $path = $this->dir . DIRECTORY_SEPARATOR . $file->filename;
         if (File::exists($path)) File::delete($path);
         $file->delete();
-
         return back()->with('success', 'تم حذف الملف.');
     }
 }

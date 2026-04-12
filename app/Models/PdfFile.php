@@ -9,7 +9,12 @@ class PdfFile extends Model
 {
     protected $guarded = [];
 
-    public function category(): BelongsTo
+    public function subcategory()
+    {
+        return $this->belongsTo(PdfSubcategory::class, 'pdf_subcategory_id');
+    }
+
+    public function category()
     {
         return $this->belongsTo(PdfCategory::class, 'pdf_category_id');
     }

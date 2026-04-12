@@ -7,7 +7,7 @@
     <div class="pb-wrapper">
 
         <div class="pb-header">
-            <a href="{{ route('pdf-bag.index') }}" class="ts-back">{{ __('messages.back') }}</a>
+            <a href="{{ route('pdf-bag.category', $category->id) }}" class="ts-back">{{ __('messages.back') }}</a>
             <div class="pb-icon">{{ $category->icon }}</div>
             <h1 class="pb-title">{{ $category->name }}</h1>
             <p class="pb-subtitle">

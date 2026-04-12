@@ -9,10 +9,11 @@ class PdfCategory extends Model
 {
     protected $guarded = [];
 
-    public function files(): HasMany
+    public function subcategories()
     {
-        return $this->hasMany(PdfFile::class)->orderBy('sort_order')->orderBy('created_at');
+        return $this->hasMany(PdfSubcategory::class, 'pdf_category_id')->orderBy('sort_order');
     }
+
 
     public function getNameAttribute(): string
     {

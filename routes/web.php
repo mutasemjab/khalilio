@@ -57,7 +57,8 @@ Route::group([
     Route::post('/quiz/{quiz}/submit',   [QuizController::class, 'submit'])->name('quiz.submit');
 
     // ── PDF Bag ───────────────────────────────────────────────
-    Route::get('/pdf-bag',                      [PdfBagController::class, 'index'])->name('pdf-bag.index');
-    Route::get('/pdf-bag/{category}',           [PdfBagController::class, 'category'])->name('pdf-bag.category');
+    Route::get('/pdf-bag', [PdfBagController::class, 'index'])->name('pdf-bag.index');
+    Route::get('/pdf-bag/{category}', [PdfBagController::class, 'category'])->name('pdf-bag.category');
+    Route::get('/pdf-bag/{category}/{subcategory}', [PdfBagController::class, 'subcategory'])->name('pdf-bag.subcategory');
 
 });
