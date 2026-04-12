@@ -296,7 +296,7 @@ return [
     'card_top_title'      => 'Top Students',
     'card_top_desc'       => 'Meet the top students, their achievements and certificates, and join the winners\' army',
     'card_bag_title'      => 'Digital Bag',
-    'card_bag_desc'       => 'Your digital library — download Mr. Ahmad Khalil\'s PDF files for free',
+    'card_bag_desc'       => 'Enter the Q Camp bag… everything related to the four subjects is waiting for you.',
     'whatsapp_join'       => 'Join the WhatsApp Channel Now',
     'whatsapp_follow'     => 'And follow all updates and your study plan around the clock',
     'join_now'            => 'Join Now',
