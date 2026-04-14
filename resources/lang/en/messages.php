@@ -484,7 +484,7 @@ return [
     'total_marks'         => 'Total marks',
     'group'         => 'Group',
     'quiz_attempts '         => 'Quiz attempts',
-    ''         => '',
+    'dashboard'         => 'Dashboard',
     ''         => '',
     ''         => '',
     ''         => '',
