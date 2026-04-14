@@ -74,6 +74,9 @@ Route::group([
             Route::get('/{quiz}/questions',  [QuizAdminController::class, 'questions'])->name('questions');
             Route::post('/{quiz}/questions', [QuizAdminController::class, 'storeQuestion'])->name('questions.store');
             Route::delete('/questions/{question}', [QuizAdminController::class, 'destroyQuestion'])->name('questions.destroy');
+
+            // Attempts (submissions)
+            Route::get('/{quiz}/attempts', [QuizAdminController::class, 'attempts'])->name('attempts');
         });
 
         // ── PDF Bag ───────────────────────────────────────────

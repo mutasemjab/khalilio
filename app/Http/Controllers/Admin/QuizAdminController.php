@@ -160,4 +160,25 @@ class QuizAdminController extends Controller
         $question->delete();
         return back()->with('success', __('messages.question_deleted'));
     }
+
+    public function attempts(Quiz $quiz, Request $request)
+    {
+        $query = $quiz->attempts()->latest();
+
+        if ($request->filled('group')) {
+            $query->where('group', $request->group);
+        }
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('student_name', 'like', "%{$search}%")
+                  ->orWhere('student_phone', 'like', "%{$search}%");
+            });
+        }
+
+        $attempts = $query->paginate(20)->withQueryString();
+
+        return view('admin.quizzes.attempts', compact('quiz', 'attempts'));
+    }
 }

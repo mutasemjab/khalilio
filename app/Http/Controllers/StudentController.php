@@ -53,12 +53,19 @@ class StudentController extends Controller
             'generation'  => 'required|in:2008,2009,2010',
         ]);
 
-        $user = User::create([
-            'name'        => $request->name,
-            'phone'       => preg_replace('/\s+/', '', $request->phone),
-            'school_name' => $request->school_name,
-            'generation'  => $request->generation,
-        ]);
+        $phone = preg_replace('/\s+/', '', $request->phone);
+
+        // Reuse existing user if phone already registered (no duplicates)
+        $user = User::where('phone', $phone)->first();
+
+        if (!$user) {
+            $user = User::create([
+                'name'        => $request->name,
+                'phone'       => $phone,
+                'school_name' => $request->school_name,
+                'generation'  => $request->generation,
+            ]);
+        }
 
         session(['registered_user_id' => $user->id]);
 

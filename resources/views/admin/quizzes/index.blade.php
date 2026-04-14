@@ -123,6 +123,12 @@
                                     {{-- Actions --}}
                                     <td class="text-center">
                                         <div class="qz-actions">
+                                            <a href="{{ route('admin.quizzes.attempts', $quiz->id) }}"
+                                               class="btn btn-sm qz-btn-attempts"
+                                               data-toggle="tooltip"
+                                               title="{{ __('messages.quiz_attempts') ?? 'مشاركو الاختبار' }}">
+                                                <i class="fas fa-users"></i>
+                                            </a>
                                             <a href="{{ route('admin.quizzes.questions', $quiz->id) }}"
                                                class="btn btn-sm qz-btn-questions"
                                                data-toggle="tooltip"
@@ -221,6 +227,8 @@
 .qz-badge-inactive { background: rgba(108,117,125,0.12); color: #5a6268; font-size: 12px; padding: 5px 10px; border-radius: 20px; }
 
 .qz-actions { display: flex; gap: 6px; justify-content: center; }
+.qz-btn-attempts { background: rgba(23,162,184,0.1); color: #17a2b8; border: 1px solid rgba(23,162,184,0.2); border-radius: 8px; padding: 5px 10px; transition: all 0.2s; }
+.qz-btn-attempts:hover { background: #17a2b8; color: white; }
 .qz-btn-questions { background: rgba(102,126,234,0.1); color: #667eea; border: 1px solid rgba(102,126,234,0.2); border-radius: 8px; padding: 5px 10px; transition: all 0.2s; }
 .qz-btn-questions:hover { background: #667eea; color: white; }
 .qz-btn-edit { background: rgba(255,193,7,0.12); color: #d39e00; border: 1px solid rgba(255,193,7,0.25); border-radius: 8px; padding: 5px 10px; transition: all 0.2s; }
