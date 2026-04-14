@@ -479,5 +479,15 @@ return [
     'phone_required'     => 'Phone number is required',
     'phone_not_found'    => 'Phone number not registered, please register first',
     'logout_btn'         => 'Logout',
+    'Generation'         => 'Generation',
+    'score'         => 'Score',
+    'total_marks'         => 'Total marks',
+    'group'         => 'Group',
+    'quiz_attempts '         => 'Quiz attempts',
+    ''         => '',
+    ''         => '',
+    ''         => '',
+    ''         => '',
+    ''         => '',
 
 ];
