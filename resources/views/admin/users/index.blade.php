@@ -16,7 +16,7 @@
     {{-- Filter Form --}}
     <div class="card border-0 shadow-sm rounded-lg mb-4">
         <div class="card-body py-3">
-            <form method="GET" action="{{ route('admin.users.index') }}" class="form-inline flex-wrap" style="gap:10px">
+            <form method="GET" action="{{ route('users.index') }}" class="form-inline flex-wrap" style="gap:10px">
                 <input type="text"
                        name="search"
                        value="{{ request('search') }}"
@@ -35,7 +35,7 @@
                     <i class="fas fa-filter mr-1"></i> {{ __('messages.filter') ?? 'فلتر' }}
                 </button>
                 @if(request()->hasAny(['search','generation']))
-                    <a href="{{ route('admin.users.index') }}" class="btn btn-light btn-sm px-3">
+                    <a href="{{ route('users.index') }}" class="btn btn-light btn-sm px-3">
                         <i class="fas fa-times mr-1"></i> {{ __('messages.clear') ?? 'مسح' }}
                     </a>
                 @endif
