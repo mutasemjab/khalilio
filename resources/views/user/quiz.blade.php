@@ -8,7 +8,7 @@
     <div class="qz-wrapper">
 
         <div class="qz-header">
-            <a href="{{ route('hub.home') }}" class="qz-back">← {{ __('messages.back') }}</a>
+            <a href="{{ route('hub.home') }}" class="qz-back">{{ __('messages.back') }}</a>
             <div class="qz-icon">🧮</div>
             <h1 class="qz-title">{{ __('messages.card_math_title') }}</h1>
             <p class="qz-subtitle">{{ __('messages.quiz_landing_subtitle') }}</p>
@@ -118,6 +118,7 @@
             position: absolute;
             top: 0;
             right: 0;
+            z-index: 10;
             display: inline-flex;
             align-items: center;
             gap: 6px;
