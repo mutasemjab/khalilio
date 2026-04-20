@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\BagExam;
 
 class PdfSubcategory extends Model
 {
@@ -19,6 +20,11 @@ class PdfSubcategory extends Model
     public function files()
     {
         return $this->hasMany(PdfFile::class, 'pdf_subcategory_id');
+    }
+
+    public function exams()
+    {
+        return $this->hasMany(BagExam::class, 'pdf_subcategory_id');
     }
 
     public function getNameAttribute(): string

@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\TopStudentAdminController;
 use App\Http\Controllers\Admin\QuizAdminController;
 use App\Http\Controllers\Admin\PdfBagAdminController;
+use App\Http\Controllers\Admin\BagExamAdminController;
 // ────────────────────────────────────────────────────────────
 
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -96,6 +97,19 @@ Route::group([
             Route::delete('/files/{file}', [PdfBagAdminController::class, 'destroyFile'])->name('files.destroy');
         });
 
+        // ── Bag Exams ─────────────────────────────────────────
+        Route::prefix('admin/bag-exams')->name('admin.bag-exams.')->group(function () {
+            Route::get('/subcategories/{subcategory}',    [BagExamAdminController::class, 'index'])->name('index');
+            Route::post('/subcategories/{subcategory}',   [BagExamAdminController::class, 'store'])->name('store');
+            Route::put('/{exam}',                         [BagExamAdminController::class, 'update'])->name('update');
+            Route::delete('/{exam}',                      [BagExamAdminController::class, 'destroy'])->name('destroy');
+
+            Route::get('/{exam}/questions',               [BagExamAdminController::class, 'questions'])->name('questions');
+            Route::post('/{exam}/questions',              [BagExamAdminController::class, 'storeQuestion'])->name('questions.store');
+            Route::delete('/questions/{question}',        [BagExamAdminController::class, 'destroyQuestion'])->name('questions.destroy');
+
+            Route::get('/{exam}/attempts',                [BagExamAdminController::class, 'attempts'])->name('attempts');
+        });
 
     });
 });

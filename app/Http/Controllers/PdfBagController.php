@@ -24,6 +24,7 @@ class PdfBagController extends Controller
     public function subcategory(PdfCategory $category, PdfSubcategory $subcategory)
     {
         $files = $subcategory->files()->orderBy('sort_order')->get();
-        return view('user.pdf-bag-files', compact('category', 'subcategory', 'files'));
+        $exams = $subcategory->exams()->where('is_active', true)->orderBy('sort_order')->withCount('questions')->get();
+        return view('user.pdf-bag-files', compact('category', 'subcategory', 'files', 'exams'));
     }
 }

@@ -51,6 +51,58 @@
 
     </div>
 
+    {{-- ── Exams Section ──────────────────────────────────── --}}
+    @if(isset($exams) && $exams->count() > 0)
+    <div class="pb-exams-section">
+        <div class="pb-exams-header">
+            <div class="pb-exams-icon">📝</div>
+            <h2 class="pb-exams-title">
+                {{ app()->getLocale() === 'ar' ? 'الامتحانات المتاحة' : 'Available Exams' }}
+            </h2>
+        </div>
+        <div class="pb-grid">
+            @foreach($exams as $exam)
+            <a href="{{ route('bag-exam.show', $exam->id) }}" class="pb-card pb-exam-card">
+                <div class="pb-card__shine"></div>
+                <div class="pb-card__left">
+                    <div class="pb-card__pdf-icon">📝</div>
+                </div>
+                <div class="pb-card__body">
+                    <h3 class="pb-card__name">{{ $exam->title }}</h3>
+                    @if($exam->description)
+                    <p class="pb-exam-desc">{{ Str::limit($exam->description, 70) }}</p>
+                    @endif
+                    <div class="pb-card__meta">
+                        <span class="pb-badge">⏱️ {{ $exam->duration_minutes }} {{ app()->getLocale() === 'ar' ? 'د' : 'min' }}</span>
+                        <span class="pb-badge">❓ {{ $exam->questions_count }} {{ app()->getLocale() === 'ar' ? 'سؤال' : 'Q' }}</span>
+                        <span class="pb-badge">⭐ {{ $exam->total_marks }} {{ app()->getLocale() === 'ar' ? 'ع' : 'pt' }}</span>
+                    </div>
+                </div>
+                <div class="pb-card__download" style="background:linear-gradient(135deg,#667eea,#764ba2)">
+                    <span class="pb-dl-icon">▶</span>
+                    <span class="pb-dl-label">{{ app()->getLocale() === 'ar' ? 'ابدأ' : 'Start' }}</span>
+                </div>
+            </a>
+            @endforeach
+        </div>
+    </div>
+    @endif
+
+    <style>
+    .pb-exams-section { margin-top: 40px; }
+    .pb-exams-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+    .pb-exams-icon { font-size: 36px; }
+    .pb-exams-title {
+        font-size: 22px; font-weight: 800;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        margin: 0;
+    }
+    .pb-exam-card { border-color: rgba(102,126,234,0.2); }
+    .pb-exam-card:hover { border-color: rgba(102,126,234,0.5); box-shadow: 0 16px 40px rgba(102,126,234,0.18); }
+    .pb-exam-desc { font-size: 13px; color: #888; margin-bottom: 8px; line-height: 1.5; }
+    </style>
+
     <style>
         .pb-wrapper { max-width: 800px; margin: 0 auto; padding-bottom: 60px; }
 

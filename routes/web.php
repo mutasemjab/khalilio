@@ -6,6 +6,7 @@ use App\Http\Controllers\TrackController;
 use App\Http\Controllers\TopStudentController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\PdfBagController;
+use App\Http\Controllers\BagExamController;
 use App\Http\Controllers\UserLoginController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -60,5 +61,11 @@ Route::group([
     Route::get('/pdf-bag', [PdfBagController::class, 'index'])->name('pdf-bag.index');
     Route::get('/pdf-bag/{category}', [PdfBagController::class, 'category'])->name('pdf-bag.category');
     Route::get('/pdf-bag/{category}/{subcategory}', [PdfBagController::class, 'subcategory'])->name('pdf-bag.subcategory');
+
+    // ── Bag Exams ─────────────────────────────────────────────
+    Route::get('/bag-exams/{exam}',          [BagExamController::class, 'show'])->name('bag-exam.show');
+    Route::post('/bag-exams/{exam}/take',    [BagExamController::class, 'take'])->name('bag-exam.take');
+    Route::post('/bag-exams/{exam}/submit',  [BagExamController::class, 'submit'])->name('bag-exam.submit');
+    Route::get('/bag-exams/result/{attempt}',[BagExamController::class, 'result'])->name('bag-exam.result');
 
 });

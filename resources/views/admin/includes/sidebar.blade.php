@@ -113,12 +113,31 @@
                 </li>
 
                 {{-- ── PDF Bag ──────────────────────────── --}}
-                <li class="nav-item {{ request()->routeIs('admin.pdf-bag.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.pdf-bag.index') }}"
-                       class="nav-link {{ request()->routeIs('admin.pdf-bag.*') ? 'active' : '' }}">
+                <li class="nav-item {{ request()->routeIs('admin.pdf-bag.*') || request()->routeIs('admin.bag-exams.*') ? 'menu-open' : '' }}">
+                    <a href="#"
+                       class="nav-link {{ request()->routeIs('admin.pdf-bag.*') || request()->routeIs('admin.bag-exams.*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-briefcase" style="color:#38ef7d"></i>
-                        <p>{{ app()->getLocale() == 'ar' ? 'الحقيبة الإلكترونية' : 'Digital Bag' }}</p>
+                        <p>
+                            {{ app()->getLocale() == 'ar' ? 'الحقيبة الإلكترونية' : 'Digital Bag' }}
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
                     </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.pdf-bag.index') }}"
+                               class="nav-link {{ request()->routeIs('admin.pdf-bag.*') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>{{ app()->getLocale() == 'ar' ? 'ملفات PDF' : 'PDF Files' }}</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.pdf-bag.index') }}"
+                               class="nav-link {{ request()->routeIs('admin.bag-exams.*') ? 'active' : '' }}">
+                                <i class="far fa-file-alt nav-icon"></i>
+                                <p>{{ app()->getLocale() == 'ar' ? 'الامتحانات' : 'Exams' }}</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
                 {{-- ── SEPARATOR ─────────────────────────── --}}

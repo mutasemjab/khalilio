@@ -5,7 +5,7 @@
 @section('content')
 <div class="container-fluid">
 
-    <div class="d-flex align-items-center justify-content-between mb-4">
+    <div class="d-flex align-items-center justify-content-between mb-4 flex-wrap" style="gap:12px">
         <div>
             <a href="{{ route('admin.pdf-bag.categories.show', $subcategory->pdf_category_id) }}"
                class="btn btn-sm btn-outline-secondary mb-2">
@@ -16,6 +16,17 @@
                 {{ $subcategory->name_ar }}
             </h4>
             <p class="text-muted mb-0 small">إدارة ملفات PDF في هذا التصنيف الفرعي</p>
+        </div>
+        <div>
+            <a href="{{ route('admin.bag-exams.index', $subcategory->id) }}"
+               class="btn btn-primary">
+                <i class="fas fa-file-alt mr-1"></i>
+                إدارة الامتحانات
+                @php $examsCount = $subcategory->exams()->count(); @endphp
+                @if($examsCount > 0)
+                <span class="badge badge-light ml-1">{{ $examsCount }}</span>
+                @endif
+            </a>
         </div>
     </div>
 
