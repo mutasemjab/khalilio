@@ -427,17 +427,18 @@ function switchType(type) {
     const isTF = type === 'true_false';
     document.getElementById('mc_options_section').classList.toggle('d-none', isTF);
     document.getElementById('tf_correct_section').classList.toggle('d-none', !isTF);
-    const mcCorrect = document.querySelector('[name="correct_answer"]');
-    const tfCorrect = document.querySelector('[name="correct_answer_tf"]');
-    if (mcCorrect && tfCorrect) {
-        if (isTF) {
-            mcCorrect.setAttribute('name', 'correct_answer_disabled');
-            tfCorrect.setAttribute('name', 'correct_answer');
-        } else {
-            tfCorrect.setAttribute('name', 'correct_answer_tf');
-            mcCorrect.setAttribute('name', 'correct_answer');
-        }
-    }
+
+    // Rename ALL MC correct-answer radios so none leak into the submission
+    document.querySelectorAll('#mc_options_section .qq-correct-grid input[type="radio"]').forEach(el => {
+        el.setAttribute('name', isTF ? 'correct_answer_disabled' : 'correct_answer');
+        if (isTF) el.checked = false;
+    });
+
+    // Rename ALL true/false radios
+    document.querySelectorAll('#tf_correct_section input[type="radio"]').forEach(el => {
+        el.setAttribute('name', isTF ? 'correct_answer' : 'correct_answer_tf');
+        if (!isTF) el.checked = false;
+    });
 }
 
 function previewQImg(input) {
