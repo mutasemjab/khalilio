@@ -9,7 +9,12 @@
     {{-- Sticky header --}}
     <div class="qt-sticky-bar">
         <div class="qt-sticky-inner">
-            <div class="qt-quiz-name">📝 {{ $exam->title }}</div>
+            <div class="qt-quiz-name">
+                📝 {{ $exam->title }}
+                @if(isset($user) && $user)
+                <span style="opacity:.75;font-size:12px;font-weight:500;margin-right:8px">— {{ $user->name }}</span>
+                @endif
+            </div>
             <div class="qt-timer" id="timer">
                 <span class="qt-timer-icon">⏱️</span>
                 <span id="timerDisplay">{{ str_pad($exam->duration_minutes, 2, '0', STR_PAD_LEFT) }}:00</span>

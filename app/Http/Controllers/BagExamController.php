@@ -5,32 +5,24 @@ namespace App\Http\Controllers;
 use App\Models\BagExam;
 use App\Models\BagExamAttempt;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BagExamController extends Controller
 {
     public function show(BagExam $exam)
     {
         abort_unless($exam->is_active, 404);
-        return view('user.bag-exam-start', compact('exam'));
+
+        $user = Auth::guard('user')->user();
+        $questions = $exam->questions()->orderBy('order')->get();
+
+        return view('user.bag-exam-take', compact('exam', 'questions', 'user'));
     }
 
     public function take(Request $request, BagExam $exam)
     {
-        abort_unless($exam->is_active, 404);
-
-        $request->validate([
-            'student_name'  => 'required|string|max:100',
-            'student_phone' => 'nullable|string|max:20',
-        ]);
-
-        session([
-            'bag_exam_name'  => $request->student_name,
-            'bag_exam_phone' => $request->student_phone,
-        ]);
-
-        $questions = $exam->questions()->orderBy('order')->get();
-
-        return view('user.bag-exam-take', compact('exam', 'questions'));
+        // kept for backward compatibility — redirects to show
+        return redirect()->route('bag-exam.show', $exam->id);
     }
 
     public function submit(Request $request, BagExam $exam)
@@ -59,10 +51,12 @@ class BagExamController extends Controller
             ];
         }
 
+        $user = Auth::guard('user')->user();
+
         $attempt = BagExamAttempt::create([
             'bag_exam_id'     => $exam->id,
-            'student_name'    => session('bag_exam_name', 'طالب'),
-            'student_phone'   => session('bag_exam_phone'),
+            'student_name'    => $user ? $user->name  : 'طالب',
+            'student_phone'   => $user ? $user->phone : null,
             'score'           => $score,
             'total_marks'     => $exam->total_marks,
             'total_questions' => $questions->count(),

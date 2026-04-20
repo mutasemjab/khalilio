@@ -156,8 +156,9 @@
                             <td><span class="badge badge-warning">{{ $exam->total_marks }}</span></td>
                             <td><small>{{ $exam->duration_minutes }} {{ app()->getLocale() === 'ar' ? 'د' : 'min' }}</small></td>
                             <td>
-                                <a href="{{ route('admin.bag-exams.attempts', $exam->id) }}" class="badge badge-light border">
-                                    {{ $exam->attempts_count }}
+                                <a href="{{ route('admin.bag-exams.attempts', $exam->id) }}"
+                                   class="btn btn-sm btn-outline-info">
+                                    <i class="fas fa-users mr-1"></i>{{ $exam->attempts_count }}
                                 </a>
                             </td>
                             <td>
@@ -182,10 +183,10 @@
                                 </button>
 
                                 <form action="{{ route('admin.bag-exams.destroy', $exam->id) }}"
-                                      method="POST" class="d-inline"
-                                      onsubmit="return confirm('{{ app()->getLocale() === 'ar' ? 'هل أنت متأكد من حذف الامتحان وكل بياناته؟' : 'Delete exam and all its data?' }}')">
+                                      method="POST" class="d-inline" id="del-form-{{ $exam->id }}">
                                     @csrf @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                                    <button type="button" class="btn btn-sm btn-outline-danger"
+                                            onclick="beConfirmDelete('del-form-{{ $exam->id }}', '{{ app()->getLocale() === 'ar' ? 'هل أنت متأكد من حذف الامتحان وكل بياناته؟' : 'Delete exam and all its data?' }}')">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </form>
@@ -262,4 +263,12 @@
     </div>
 
 </div>
+
+<script>
+function beConfirmDelete(formId, msg) {
+    if (window.confirm(msg)) {
+        document.getElementById(formId).submit();
+    }
+}
+</script>
 @endsection

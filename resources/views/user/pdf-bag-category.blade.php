@@ -23,10 +23,25 @@
                         <div class="pb-cat-icon">{{ $sub->icon }}</div>
                         <div class="pb-cat-body">
                             <h3 class="pb-cat-name">{{ $sub->name }}</h3>
-                            <span class="pb-cat-count">
-                                {{ $sub->files_count }}
-                                {{ app()->getLocale() === 'ar' ? 'ملف' : 'files' }}
-                            </span>
+                            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
+                                @if($sub->files_count > 0)
+                                <span class="pb-cat-count">
+                                    📄 {{ $sub->files_count }}
+                                    {{ app()->getLocale() === 'ar' ? 'ملف' : 'files' }}
+                                </span>
+                                @endif
+                                @if($sub->exams_count > 0)
+                                <span class="pb-cat-count" style="background:rgba(102,126,234,0.12);color:#667eea">
+                                    📝 {{ $sub->exams_count }}
+                                    {{ app()->getLocale() === 'ar' ? 'امتحان' : 'exams' }}
+                                </span>
+                                @endif
+                                @if($sub->files_count == 0 && $sub->exams_count == 0)
+                                <span class="pb-cat-count" style="background:rgba(0,0,0,0.05);color:#aaa">
+                                    {{ app()->getLocale() === 'ar' ? 'فارغ' : 'empty' }}
+                                </span>
+                                @endif
+                            </div>
                         </div>
                         <div class="pb-cat-arrow">
                             {{ app()->getLocale() === 'ar' ? '←' : '→' }}

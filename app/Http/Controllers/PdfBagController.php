@@ -17,7 +17,7 @@ class PdfBagController extends Controller
 
     public function category(PdfCategory $category)
     {
-        $subcategories = $category->subcategories()->withCount('files')->get();
+        $subcategories = $category->subcategories()->withCount(['files', 'exams'])->get();
         return view('user.pdf-bag-category', compact('category', 'subcategories'));
     }
 
