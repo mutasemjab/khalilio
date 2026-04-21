@@ -18,7 +18,12 @@
         </div>
     </div>
 
-
+    @if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm">
+        <i class="fas fa-check-circle mr-2"></i> {{ session('success') }}
+        <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+    </div>
+    @endif
 
     {{-- Add Subcategory --}}
     <div class="card shadow-sm mb-4">
@@ -70,34 +75,76 @@
                     <thead class="thead-light">
                         <tr>
                             <th>#</th><th>الأيقونة</th><th>الاسم</th>
-                            <th>عدد الملفات</th><th>الترتيب</th><th>إجراءات</th>
+                            <th>الملفات</th><th>الترتيب</th><th>إجراءات</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($subcategories as $i => $sub)
                         <tr>
-                            <td class="text-muted">{{ $i + 1 }}</td>
-                            <td style="font-size:22px">{{ $sub->icon }}</td>
-                            <td>
+                            <td class="text-muted align-middle">{{ $i + 1 }}</td>
+                            <td class="align-middle" style="font-size:22px">{{ $sub->icon }}</td>
+                            <td class="align-middle">
                                 <strong>{{ $sub->name_ar }}</strong>
                                 @if($sub->name_en)
                                     <small class="text-muted d-block">{{ $sub->name_en }}</small>
                                 @endif
                             </td>
-                            <td><span class="badge badge-info">{{ $sub->files_count }} ملف</span></td>
-                            <td class="text-muted">{{ $sub->sort_order }}</td>
-                            <td>
+                            <td class="align-middle">
+                                <span class="badge badge-info">{{ $sub->files_count }} ملف</span>
+                            </td>
+                            <td class="text-muted align-middle">{{ $sub->sort_order }}</td>
+                            <td class="align-middle">
                                 <a href="{{ route('admin.pdf-bag.subcategories.show', $sub->id) }}"
-                                   class="btn btn-sm btn-outline-primary mr-1">
-                                    <i class="fas fa-folder-open"></i> إدارة الملفات
+                                   class="btn btn-sm btn-outline-primary mr-1" title="إدارة الملفات">
+                                    <i class="fas fa-folder-open"></i>
                                 </a>
+                                <button class="btn btn-sm btn-outline-secondary mr-1"
+                                        data-toggle="collapse" data-target="#editSub{{ $sub->id }}"
+                                        title="تعديل">
+                                    <i class="fas fa-edit"></i>
+                                </button>
                                 <form action="{{ route('admin.pdf-bag.subcategories.destroy', $sub->id) }}"
-                                      method="POST" class="d-inline"
-                                      onsubmit="return confirm('حذف التصنيف الفرعي وجميع ملفاته؟')">
+                                      method="POST" class="d-inline" id="del-sub-{{ $sub->id }}">
                                     @csrf @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                                    <button type="button" class="btn btn-sm btn-outline-danger"
+                                            onclick="pbConfirm('del-sub-{{ $sub->id }}', 'حذف التصنيف الفرعي وجميع ملفاته؟')">
                                         <i class="fas fa-trash"></i>
                                     </button>
+                                </form>
+                            </td>
+                        </tr>
+                        {{-- Inline edit row --}}
+                        <tr class="collapse bg-light" id="editSub{{ $sub->id }}">
+                            <td colspan="6" class="p-3">
+                                <form action="{{ route('admin.pdf-bag.subcategories.update', $sub->id) }}" method="POST">
+                                    @csrf @method('PUT')
+                                    <div class="row align-items-end">
+                                        <div class="col-md-4 form-group mb-2">
+                                            <label class="font-weight-bold small">الاسم بالعربي *</label>
+                                            <input type="text" name="name_ar" class="form-control form-control-sm"
+                                                   value="{{ $sub->name_ar }}" required>
+                                        </div>
+                                        <div class="col-md-3 form-group mb-2">
+                                            <label class="font-weight-bold small">الاسم بالإنجليزي</label>
+                                            <input type="text" name="name_en" class="form-control form-control-sm"
+                                                   value="{{ $sub->name_en }}">
+                                        </div>
+                                        <div class="col-md-2 form-group mb-2">
+                                            <label class="font-weight-bold small">الأيقونة</label>
+                                            <input type="text" name="icon" class="form-control form-control-sm text-center"
+                                                   value="{{ $sub->icon }}" maxlength="5">
+                                        </div>
+                                        <div class="col-md-1 form-group mb-2">
+                                            <label class="font-weight-bold small">الترتيب</label>
+                                            <input type="number" name="sort_order" class="form-control form-control-sm"
+                                                   value="{{ $sub->sort_order }}" min="0">
+                                        </div>
+                                        <div class="col-md-2 form-group mb-2">
+                                            <button type="submit" class="btn btn-sm btn-success btn-block">
+                                                <i class="fas fa-save mr-1"></i> حفظ
+                                            </button>
+                                        </div>
+                                    </div>
                                 </form>
                             </td>
                         </tr>
@@ -114,4 +161,12 @@
     </div>
 
 </div>
+
+<script>
+function pbConfirm(formId, msg) {
+    if (window.confirm(msg)) {
+        document.getElementById(formId).submit();
+    }
+}
+</script>
 @endsection

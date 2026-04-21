@@ -84,16 +84,19 @@ Route::group([
         Route::prefix('admin/pdf-bag')->name('admin.pdf-bag.')->group(function () {
             Route::get('/', [PdfBagAdminController::class, 'index'])->name('index');
             Route::post('/categories', [PdfBagAdminController::class, 'storeCategory'])->name('categories.store');
+            Route::put('/categories/{category}', [PdfBagAdminController::class, 'updateCategory'])->name('categories.update');
             Route::delete('/categories/{category}', [PdfBagAdminController::class, 'destroyCategory'])->name('categories.destroy');
 
             // Subcategories (managed inside category page)
             Route::get('/categories/{category}', [PdfBagAdminController::class, 'showCategory'])->name('categories.show');
             Route::post('/categories/{category}/subcategories', [PdfBagAdminController::class, 'storeSubcategory'])->name('subcategories.store');
+            Route::put('/subcategories/{subcategory}', [PdfBagAdminController::class, 'updateSubcategory'])->name('subcategories.update');
             Route::delete('/subcategories/{subcategory}', [PdfBagAdminController::class, 'destroySubcategory'])->name('subcategories.destroy');
 
             // Files (managed inside subcategory page)
             Route::get('/subcategories/{subcategory}', [PdfBagAdminController::class, 'showSubcategory'])->name('subcategories.show');
             Route::post('/subcategories/{subcategory}/files', [PdfBagAdminController::class, 'storeFile'])->name('files.store');
+            Route::put('/files/{file}', [PdfBagAdminController::class, 'updateFile'])->name('files.update');
             Route::delete('/files/{file}', [PdfBagAdminController::class, 'destroyFile'])->name('files.destroy');
         });
 

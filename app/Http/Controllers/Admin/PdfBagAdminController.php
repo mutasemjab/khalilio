@@ -48,6 +48,25 @@ class PdfBagAdminController extends Controller
         return back()->with('success', 'تم إضافة التصنيف بنجاح.');
     }
 
+    public function updateCategory(Request $request, PdfCategory $category)
+    {
+        $request->validate([
+            'name_ar'    => 'required|string|max:200',
+            'name_en'    => 'nullable|string|max:200',
+            'icon'       => 'nullable|string|max:10',
+            'sort_order' => 'nullable|integer|min:0',
+        ]);
+
+        $category->update([
+            'name_ar'    => $request->name_ar,
+            'name_en'    => $request->name_en,
+            'icon'       => $request->icon ?: '📁',
+            'sort_order' => $request->sort_order ?? 0,
+        ]);
+
+        return back()->with('success', 'تم تعديل التصنيف بنجاح.');
+    }
+
     public function destroyCategory(PdfCategory $category)
     {
         foreach ($category->subcategories as $sub) {
@@ -86,6 +105,25 @@ class PdfBagAdminController extends Controller
         ]);
 
         return back()->with('success', 'تم إضافة التصنيف الفرعي بنجاح.');
+    }
+
+    public function updateSubcategory(Request $request, PdfSubcategory $subcategory)
+    {
+        $request->validate([
+            'name_ar'    => 'required|string|max:200',
+            'name_en'    => 'nullable|string|max:200',
+            'icon'       => 'nullable|string|max:10',
+            'sort_order' => 'nullable|integer|min:0',
+        ]);
+
+        $subcategory->update([
+            'name_ar'    => $request->name_ar,
+            'name_en'    => $request->name_en,
+            'icon'       => $request->icon ?: '📁',
+            'sort_order' => $request->sort_order ?? 0,
+        ]);
+
+        return back()->with('success', 'تم تعديل التصنيف الفرعي بنجاح.');
     }
 
     public function destroySubcategory(PdfSubcategory $subcategory)
@@ -133,6 +171,21 @@ class PdfBagAdminController extends Controller
         ]);
 
         return back()->with('success', 'تم رفع الملف بنجاح.');
+    }
+
+    public function updateFile(Request $request, PdfFile $file)
+    {
+        $request->validate([
+            'title'      => 'required|string|max:200',
+            'sort_order' => 'nullable|integer|min:0',
+        ]);
+
+        $file->update([
+            'title'      => $request->title,
+            'sort_order' => $request->sort_order ?? 0,
+        ]);
+
+        return back()->with('success', 'تم تعديل اسم الملف بنجاح.');
     }
 
     public function destroyFile(PdfFile $file)

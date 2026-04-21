@@ -18,8 +18,7 @@
             <p class="text-muted mb-0 small">إدارة ملفات PDF في هذا التصنيف الفرعي</p>
         </div>
         <div>
-            <a href="{{ route('admin.bag-exams.index', $subcategory->id) }}"
-               class="btn btn-primary">
+            <a href="{{ route('admin.bag-exams.index', $subcategory->id) }}" class="btn btn-primary">
                 <i class="fas fa-file-alt mr-1"></i>
                 إدارة الامتحانات
                 @php $examsCount = $subcategory->exams()->count(); @endphp
@@ -30,6 +29,12 @@
         </div>
     </div>
 
+    @if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm">
+        <i class="fas fa-check-circle mr-2"></i> {{ session('success') }}
+        <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+    </div>
+    @endif
 
     {{-- Upload PDF --}}
     <div class="card shadow-sm mb-4">
@@ -77,33 +82,71 @@
                 <table class="table table-hover mb-0">
                     <thead class="thead-light">
                         <tr>
-                            <th>#</th><th>اسم الملف</th><th>الحجم</th>
-                            <th>تاريخ الرفع</th><th>الترتيب</th><th>إجراءات</th>
+                            <th>#</th>
+                            <th>العنوان</th>
+                            <th>الحجم</th>
+                            <th>تاريخ الرفع</th>
+                            <th>الترتيب</th>
+                            <th>إجراءات</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($files as $i => $file)
                         <tr>
-                            <td class="text-muted">{{ $i + 1 }}</td>
-                            <td>
+                            <td class="text-muted align-middle">{{ $i + 1 }}</td>
+                            <td class="align-middle">
                                 <span style="font-size:18px">📄</span>
                                 <strong class="mr-2">{{ $file->title }}</strong>
-                                <small class="text-muted d-block">{{ $file->filename }}</small>
+                                <small class="text-muted d-block" style="font-size:11px">{{ $file->filename }}</small>
                             </td>
-                            <td><span class="badge badge-light">{{ $file->size }}</span></td>
-                            <td class="text-muted small">{{ $file->created_at->format('Y-m-d H:i') }}</td>
-                            <td class="text-muted">{{ $file->sort_order }}</td>
-                            <td>
+                            <td class="align-middle"><span class="badge badge-light">{{ $file->size }}</span></td>
+                            <td class="text-muted align-middle small">{{ $file->created_at->format('Y-m-d H:i') }}</td>
+                            <td class="text-muted align-middle">{{ $file->sort_order }}</td>
+                            <td class="align-middle">
                                 <a href="{{ $file->url }}" target="_blank" class="btn btn-sm btn-outline-primary mr-1">
                                     <i class="fas fa-eye"></i>
                                 </a>
+                                <button class="btn btn-sm btn-outline-secondary mr-1"
+                                        data-toggle="collapse" data-target="#editFile{{ $file->id }}"
+                                        title="تعديل الاسم">
+                                    <i class="fas fa-edit"></i>
+                                </button>
                                 <form action="{{ route('admin.pdf-bag.files.destroy', $file->id) }}"
-                                      method="POST" class="d-inline"
-                                      onsubmit="return confirm('هل أنت متأكد من الحذف؟')">
+                                      method="POST" class="d-inline" id="del-file-{{ $file->id }}">
                                     @csrf @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                                    <button type="button" class="btn btn-sm btn-outline-danger"
+                                            onclick="pbConfirm('del-file-{{ $file->id }}', 'هل أنت متأكد من حذف الملف؟')">
                                         <i class="fas fa-trash"></i>
                                     </button>
+                                </form>
+                            </td>
+                        </tr>
+                        {{-- Inline edit row --}}
+                        <tr class="collapse bg-light" id="editFile{{ $file->id }}">
+                            <td colspan="6" class="p-3">
+                                <form action="{{ route('admin.pdf-bag.files.update', $file->id) }}" method="POST">
+                                    @csrf @method('PUT')
+                                    <div class="row align-items-end">
+                                        <div class="col-md-7 form-group mb-2">
+                                            <label class="font-weight-bold small">عنوان الملف *</label>
+                                            <input type="text" name="title" class="form-control form-control-sm"
+                                                   value="{{ $file->title }}" required>
+                                        </div>
+                                        <div class="col-md-2 form-group mb-2">
+                                            <label class="font-weight-bold small">الترتيب</label>
+                                            <input type="number" name="sort_order" class="form-control form-control-sm"
+                                                   value="{{ $file->sort_order }}" min="0">
+                                        </div>
+                                        <div class="col-md-3 form-group mb-2">
+                                            <button type="submit" class="btn btn-sm btn-success btn-block">
+                                                <i class="fas fa-save mr-1"></i> حفظ العنوان
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <small class="text-muted">
+                                        <i class="fas fa-info-circle mr-1"></i>
+                                        ملاحظة: تعديل الاسم لا يؤثر على ملف PDF المرفوع على القرص.
+                                    </small>
                                 </form>
                             </td>
                         </tr>
@@ -120,4 +163,12 @@
     </div>
 
 </div>
+
+<script>
+function pbConfirm(formId, msg) {
+    if (window.confirm(msg)) {
+        document.getElementById(formId).submit();
+    }
+}
+</script>
 @endsection
