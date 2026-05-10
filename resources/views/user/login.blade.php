@@ -13,6 +13,18 @@
         <p class="login-subtitle">{{ __('messages.login_subtitle') }}</p>
     </div>
 
+    @if(session('session_expired'))
+        <div class="login-alert login-alert--warn">
+            ⏰ انتهت جلستك. أدخل رقم هاتفك مجدداً للمتابعة.
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div class="login-alert">
+            {{ session('error') }}
+        </div>
+    @endif
+
     @if($errors->any())
         <div class="login-alert">
             {{ $errors->first() }}
@@ -97,6 +109,13 @@
     font-size: 14px;
     font-weight: 600;
     animation: shake 0.4s ease-out;
+}
+
+.login-alert--warn {
+    background: rgba(255, 193, 7, 0.1);
+    border-color: rgba(255, 193, 7, 0.4);
+    color: #856404;
+    animation: fadeInDown 0.4s ease-out;
 }
 
 @keyframes shake {
